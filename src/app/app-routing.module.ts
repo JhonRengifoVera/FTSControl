@@ -15,6 +15,22 @@ const routes: Routes = [
     loadChildren: () => import('./modules/paginas-estaticas/paginas-estaticas.module').then((m) => m.PaginasEstaticasModule),
   },
   {
+    path: 'admin',
+    loadChildren: () => import('./modules/administracion/admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'rrhh',
+    loadChildren: () => import('./modules/rrhh/rrhh.module').then((m) => m.RrhhModule),
+  },
+  {
+    path: 'jefe',
+    loadChildren: () => import('./modules/jefe/jefe.module').then((m) => m.JefeModule),
+  },
+  {
+    path: 'colaborador',
+    loadChildren: () => import('./modules/colaborador/colaborador.module').then((m) => m.ColaboradorModule),
+  },
+  {
     path: 'errors',
     loadChildren: () => import('./modules/error/error.module').then((m) => m.ErrorModule),
   },
