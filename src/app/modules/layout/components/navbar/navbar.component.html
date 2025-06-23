@@ -16,8 +16,8 @@
 
       <!-- Logo -->
       <div class="flex items-center justify-start sm:order-2 md:mr-10 lg:hidden">
-        <a class="flex items-center justify-center rounded w-40 p-2 focus:outline-none focus:ring-1">
-          <img src="assets/images/logo.png" alt="">
+        <a class="flex w-40 items-center justify-center rounded p-2 focus:outline-none focus:ring-1">
+          <img src="assets/images/logo.png" alt="" />
         </a>
       </div>
 
@@ -27,7 +27,41 @@
       </div> -->
 
       <!-- Profile menu -->
-      <div class="items-center justify-end sm:order-4 md:flex md:flex-1 lg:w-0">
+      <div class="flex items-center justify-end font-montserrat sm:order-4 md:flex md:flex-1 lg:w-0">
+        <div class="mr-4 flex flex-wrap items-center justify-center gap-2">
+          <i
+            (click)="op.toggle($event)"
+            class="pi pi-bell relative cursor-pointer text-2xl"
+            pBadge
+            value="3"
+            pBadgePosition="top-right"></i>
+
+          <p-overlayPanel #op>
+            <div class="w-72 font-montserrat sm:w-64 md:w-[20rem] lg:w-[25rem]">
+              <span class="mb-3 block text-sm font-bold">Permisos entrantes</span>
+              <ul class="m-0 flex list-none flex-col gap-3 p-0">
+                <li
+                  *ngFor="let member of members"
+                  class="flex cursor-pointer items-center gap-2 border-b border-gray-300 pb-2 hover:bg-gray-300 hover:text-black p-2 hover:rounded-lg">
+                  <img
+                    [src]="'https://primefaces.org/cdn/primeng/images/demo/avatar/' + member.image"
+                    class="h-[30px] w-[30px] rounded-full" />
+                  <div class="min-w-0 flex-1 hover:text-black">
+                    <span class="block truncate text-sm">{{ member.name }}</span>
+                    <div class="truncate text-xs text-gray-500">
+                      {{ member.descripcion }}
+                    </div>
+                  </div>
+                  <div class="ml-auto flex gap-2 text-sm text-gray-600">
+                    <div class="cursor-pointer">
+                      <i class="pi pi-times text-xs"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </p-overlayPanel>
+        </div>
         <app-profile-menu></app-profile-menu>
       </div>
     </div>
