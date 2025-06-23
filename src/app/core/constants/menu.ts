@@ -2,17 +2,17 @@ import { MenuItem } from '../models/menu.model';
 
 export class Menu {
   public static pages: MenuItem[] = [
-    {
-      group: '',
-      separator: false,
-      items: [
-        {
-          icon: 'assets/icons/heroicons/outline/home.svg',
-          label: 'Inicio',
-          route: '/paginas/inicio',
-        },
-      ]
-    },
+    // {
+    //   group: '',
+    //   separator: false,
+    //   items: [
+    //     {
+    //       icon: 'assets/icons/heroicons/outline/home.svg',
+    //       label: 'Inicio',
+    //       route: '/paginas/inicio',
+    //     },
+    //   ]
+    // },
     {
       group: 'Administración del sistema',
       separator: true,
@@ -22,6 +22,7 @@ export class Menu {
           label: 'Administracion',
           route: '/admin',
           children: [
+            { label: 'Inicio', route: '/admin/inicio-admin' },
             { label: 'Gestion usuarios', route: '/admin/gestion-usuarios' },
             { label: 'Asignacion de permisos', route: '/admin/asignacion-permisos' },
             { label: 'Administración de Roles y Puestos', route: '/admin/administracion-roles' },
