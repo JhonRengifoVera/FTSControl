@@ -25,8 +25,8 @@ export class Menu {
             { label: 'Inicio', route: '/admin/inicio-admin' },
             { label: 'Gestion usuarios', route: '/admin/gestion-usuarios' },
             { label: 'Asignacion de permisos', route: '/admin/asignacion-permisos' },
-            { label: 'Administración de Roles y Puestos', route: '/admin/administracion-roles' },
-            { label: 'Reportes y consultas', route: '/admin/reportes' },
+            { label: 'Administración general', route: '/admin/administracion-roles' },
+            { label: 'Reportes', route: '/admin/reportes' },
           ],
         },
       ]
@@ -42,7 +42,7 @@ export class Menu {
           children: [
             { label: 'Registrar colaborador', route: '/rrhh/colaboradores/registro' },
             { label: 'Actualizar información', route: '/rrhh/colaboradores/actualizar' },
-            { label: 'Asignar roles y jefes', route: '/rrhh/colaboradores/asignacion' },
+            { label: 'Gestionar perfiles', route: '/rrhh/colaboradores/asignacion' },
           ]
         },
         {

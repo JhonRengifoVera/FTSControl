@@ -226,3 +226,44 @@ body {
   border-color: rgba(226, 232, 240, 0);
   border-bottom-color: #d3dce8;
 }
+
+.p-paginator {
+  margin-top: 1rem;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: #eff6ff;
+  border-color: #eff6ff;
+  color: #1d4ed8;
+}
+
+.p-dropdown {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+  }
+}
+
+
+.p-datatable-tbody,
+.p-datatable-table,
+.p-datatable-thead,
+.p-dropdown-trigger,
+.p-dropdown-items,
+.p-dropdown-label, 
+.p-inputtext,
+.p-paginator,
+.p-datatable-wrapper,
+.p-datatable-table {
+  background-color: hsl(var(--background));
+}

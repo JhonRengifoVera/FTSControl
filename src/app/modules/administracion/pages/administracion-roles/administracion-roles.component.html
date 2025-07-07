@@ -1,1 +1,138 @@
-<p>administracion-roles works!</p>
+<div class="m-4 rounded-xl bg-background p-4">
+    <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+        <div>
+            <h1 class="text-2xl font-bold text-foreground">Gestión general</h1>
+            <p class="text-sm text-foreground">Administracion de perfiles de usuario, cargos y departamentos</p>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div class="my-5 grid">
+            <app-stats-card title="Perfiles activos" [value]="contadorPerfiles" icon="pi pi-align-center"
+                iconColor="text-yellow-500" chartColor="#3B82F6" buttonLabel="Crear perfil"
+                (click)="abrirModal('perfil')" [buttonIcon]="'pi pi-plus'" />
+            <div class="mt-3 shadow">
+                <p-table #dt [value]="perfilesData" [paginator]="true" [rows]="10"
+                    [tableStyle]="{ 'min-width': '20rem' }" [rowsPerPageOptions]="[5, 10, 20]"
+                    styleClass="p-datatable-striped" class="text-xs">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="text-center">Id</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Fecha Creacion</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-perfilesData>
+                        <tr>
+                            <td class="text-center">{{ perfilesData.id }}</td>
+                            <td class="text-center">{{ perfilesData.nombre }}</td>
+                            <td class="text-center">{{ perfilesData.fechaCreacion }}</td>
+                            <td class="flex justify-center gap-2 text-center">
+                                <app-button impact="bold" tone="primary" shape="rounded" class="text-center" (click)="abrirModal('departamento')"
+                                    size="small">
+                                    <span class="flex items-center"><i class="pi pi-pencil mr-1 text-sm"> </i>
+                                        Editar
+                                    </span>
+                                </app-button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+        <div class="my-5 grid">
+            <app-stats-card title="Cargos activos" [value]="contadorCargos" icon="pi pi-lightbulb"
+                iconColor="text-blue-500" chartColor="#3B82F6" buttonLabel="Crear cargo" [buttonIcon]="'pi pi-plus'"
+                (click)="abrirModal('cargo')" />
+            <div class="mt-3 shadow">
+                <p-table #dt [value]="perfilesData" [paginator]="true" [rows]="10"
+                    [tableStyle]="{ 'min-width': '20rem' }" [rowsPerPageOptions]="[5, 10, 20]"
+                    styleClass="p-datatable-striped" class="text-xs">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="text-center">Id</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Fecha Creacion</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-perfilesData>
+                        <tr>
+                            <td class="text-center">{{ perfilesData.id }}</td>
+                            <td class="text-center">{{ perfilesData.nombre }}</td>
+                            <td class="text-center">{{ perfilesData.fechaCreacion }}</td>
+                            <td class="flex justify-center gap-2 text-center">
+                                <app-button impact="bold" tone="primary" shape="rounded" class="text-center" (click)="abrirModal('departamento')"
+                                    size="small">
+                                    <span class="flex items-center"><i class="pi pi-pencil mr-1 text-sm"> </i>
+                                        Editar
+                                    </span>
+                                </app-button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="my-5 grid">
+            <app-stats-card title="Departamentos activos" [value]="contadorDepartamentos" icon="pi pi-building-columns"
+                iconColor="text-green-500" chartColor="#3B82F6" buttonLabel="Crear departamento"
+                [buttonIcon]="'pi pi-plus'" (click)="abrirModal('departamento')" />
+            <div class="mt-3 shadow">
+                <p-table #dt [value]="perfilesData" [paginator]="true" [rows]="10"
+                    [tableStyle]="{ 'min-width': '20rem' }" [rowsPerPageOptions]="[5, 10, 20]"
+                    styleClass="p-datatable-striped" class="text-xs">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="text-center">Id</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Fecha Creacion</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-perfilesData>
+                        <tr>
+                            <td class="text-center">{{ perfilesData.id }}</td>
+                            <td class="text-center">{{ perfilesData.nombre }}</td>
+                            <td class="text-center">{{ perfilesData.fechaCreacion }}</td>
+                            <td class="flex justify-center gap-2 text-center">
+                                <app-button impact="bold" tone="primary" shape="rounded" class="text-center" (click)="abrirModal('departamento')"
+                                    size="small">
+                                    <span class="flex items-center"><i class="pi pi-pencil mr-1 text-sm"> </i>
+                                        Editar
+                                    </span>
+                                </app-button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-modal *ngIf="form" [show]="showModal" title="Crear {{ tipoModal }}" (close)="cerrarModal()">
+    <form [formGroup]="form">
+        <ng-container *ngFor="let campo of camposInput">
+            <div *ngIf="campo.enabled" class="font-montserrat text-xs">
+                <label>{{ campo.label }}:</label>
+                <input [placeholder]="campo.label" [formControlName]="campo.formControlName"
+                    class="border p-2 w-full mb-4 rounded-lg" />
+            </div>
+        </ng-container>
+    </form>
+    <div class="flex justify-end gap-2">
+        <app-button impact="bold" tone="light" shape="rounded" class="text-center font-montserrat" size="small"
+            (click)="cerrarModal()">
+            <span class="flex items-center text-white"><i class="pi pi-times mr-1 text-sm text-white"> </i>
+                Cancelar
+            </span>
+        </app-button>
+        <app-button impact="bold" tone="primary" shape="rounded" class="text-center font-montserrat" size="small">
+            <span class="flex items-center"><i class="pi pi-pencil mr-1 text-sm  text-white"> </i>
+                Guardar
+            </span>
+        </app-button>
+    </div>
+</app-modal>

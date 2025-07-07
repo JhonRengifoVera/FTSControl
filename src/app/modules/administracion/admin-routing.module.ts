@@ -5,12 +5,14 @@ import { GestionUsuariosComponent } from './pages/gestion-usuarios/gestion-usuar
 import { AsignacionPermisosComponent } from './pages/asignacion-permisos/asignacion-permisos.component';
 import { AdministracionRolesComponent } from './pages/administracion-roles/administracion-roles.component';
 import { ReportesComponent } from './pages/reportes/reportes.component';
+import { InicioAdminComponent } from './pages/inicio-admin/inicio-admin.component';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
     children: [
+      { path: 'inicio-admin', component: InicioAdminComponent },
       { path: 'gestion-usuarios', component: GestionUsuariosComponent },
       { path: 'asignacion-permisos', component: AsignacionPermisosComponent },
       { path: 'administracion-roles', component: AdministracionRolesComponent },

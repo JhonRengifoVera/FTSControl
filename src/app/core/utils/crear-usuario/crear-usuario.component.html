@@ -1,0 +1,149 @@
+<form [formGroup]="formUsuario" (ngSubmit)="guardarUsuario()">
+  <div class="grid rounded-lg bg-background">
+    <!-- Foto -->
+    <!-- <div class="field col-12">
+      <label>Foto / Avatar</label>
+      <p-fileUpload 
+        mode="basic" 
+        name="foto" 
+        accept="image/*" 
+        maxFileSize="1000000" 
+        (onUpload)="onUpload($event)"
+        chooseLabel="Subir foto"
+        chooseIcon="pi pi-upload" />
+    </div> -->
+
+    <!-- Nombres -->
+    <p class="rounded-lg py-[1rem] text-center text-lg font-bold text-foreground">Crear nuevo usuario</p>
+    <div class="mt-2 h-1/2">
+      <h1 for="nombres" class="mb-2 text-sm font-bold text-foreground">Nombres:</h1>
+      <input
+        type="text"
+        id="nombres"
+        class="rounded-lg border border-gray-300"
+        placeholder="Nombres"
+         />
+    </div>
+
+    <!-- apellidos -->
+    <div class="mt-2 h-1/2">
+      <h1 for="apellidos" class="mb-2 text-sm font-bold text-foreground">Apellidos:</h1>
+      <input
+        type="text"
+        id="apellidos"
+        class="rounded-lg border border-gray-300"
+        placeholder="Apellidos"
+         />
+    </div>
+
+    <!-- cedula -->
+    <div class="mt-2 h-1/2">
+      <h1 for="cedula" class="mb-2 text-sm font-bold text-foreground">Cedula:</h1>
+      <input
+        type="text"
+        id="cedula"
+        class="rounded-lg border border-gray-300"
+        placeholder="Cedula"
+         />
+    </div>
+
+    <!-- Correo -->
+    <div class="mt-2 h-1/2">
+      <h1 for="correo" class="mb-2 text-sm font-bold text-foreground">Correo electrónico:</h1>
+      <input
+        type="email"
+        id="correo"
+        class="rounded-lg border border-gray-300"
+        placeholder="ejemplo@fts.com"
+        formControlName="correo" />
+    </div>
+
+    <!-- Rol -->
+    <div class="mt-2 h-1/2">
+      <h1 for="rol" class="mb-2 text-sm font-bold text-foreground">Perfil:</h1>
+      <p-dropdown
+        [options]="roles"
+        optionLabel="nombre"
+        formControlName="rol"
+        appendTo="body"
+        [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+        [styleClass]="'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full'"
+        placeholder="Seleccione un perfil"></p-dropdown>
+    </div>
+
+    <!-- Departamento -->
+    <div class="mt-2 h-1/2">
+      <h1 for="Departamento" class="mb-2 text-sm font-bold text-foreground">Departamento:</h1>
+      <p-dropdown
+        [options]="departamentos"
+        optionLabel="nombre"
+        formControlName="departamento"
+        appendTo="body"
+        [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+        [styleClass]="'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full'"
+        placeholder="Seleccione un departamento"></p-dropdown>
+    </div>
+
+    <!-- Cargo -->
+    <div class="mt-2 h-1/2">
+      <h1 for="cargo" class="mb-2 text-sm font-bold text-foreground">Cargo:</h1>
+      <p-dropdown
+        [options]="cargos"
+        optionLabel="nombre"
+        formControlName="cargo"
+        appendTo="body"
+        [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+        [styleClass]="'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full'"
+        placeholder="Seleccione un cargo"></p-dropdown>
+    </div>
+
+    <!-- Jefe directo -->
+    <div class="mt-2 h-1/2">
+      <h1 for="cargo" class="mb-2 text-sm font-bold text-foreground">Jefe directo:</h1>
+      <p-dropdown
+        [options]="jefes"
+        optionLabel="nombre"
+        formControlName="jefe"
+        appendTo="body"
+        [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+        [styleClass]="'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full'"
+        placeholder="Seleccione un jefe (opcional)"></p-dropdown>
+    </div>
+
+    <!-- Estado -->
+    <!-- <div class="mt-2 h-1/2">
+      <h1 for="cargo" class="mb-2 text-sm font-bold text-foreground">Jefe directo:</h1>
+      <label></label>
+      <p-inputSwitch formControlName="activo"></p-inputSwitch>
+      <span class="ml-2">{{ formUsuario.get('activo')?.value ? 'Activo' : 'Inactivo' }}</span>
+    </div> -->
+
+    <!-- Contraseña -->
+    <!-- <div class="field col-12 md:col-6">
+      <label>Contraseña</label>
+      <input pInputText type="password" formControlName="password" />
+    </div> -->
+
+    <!-- Botones -->
+    <div class="mt-4 flex items-center justify-center gap-2">
+      <app-button
+        impact="bold"
+        tone="primary"
+        shape="rounded"
+        class="p-2 text-center"
+        size="small"
+        (click)="cancelar()">
+        <div class="text-clamp(14px,2vw,28px) flex items-center py-1.5 gap-2 ">
+          <i class="pi pi-times"> </i>
+          <h1>Cancelar</h1>
+        </div>
+      </app-button>
+      <app-button impact="bold" tone="primary" shape="rounded" class="p-2 text-center" size="small">
+        <div class="text-clamp(14px,2vw,28px) flex items-center py-1.5 gap-2">
+          <i class="pi pi-check"> </i>
+          <h1>Guardar</h1>
+        </div>
+      </app-button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,18 @@
+<div class="flex flex-col justify-between rounded-xl bg-background p-4 shadow w-full h-full gap-2">
+  <div class="flex items-center justify-between w-full">
+    <div>
+      <p class="text-sm text-foreground font-bold">{{ title }}</p>
+      <h2 class="text-xl font-bold text-foreground">{{ value | number }}</h2>
+    </div>
+    <i [ngClass]="[icon, iconColor, 'text-2xl']"></i>
+  </div>
+
+  <apx-chart *ngIf="chart && series?.length" [series]="series" [chart]="chart" [stroke]="stroke" [fill]="fill"
+    [xaxis]="xaxis" [colors]="[chartColor]">
+  </apx-chart>
+
+  <app-button *ngIf="buttonLabel" (click)="buttonAction?.()" impact="bold" tone="primary" shape="rounded" class="class"
+    size="small">
+    <i *ngIf="buttonIcon" [ngClass]="[buttonIcon, 'blockmd:hidden lg:hidden']"></i>
+    <span class="ml-2 lg:inline md:block"> {{ buttonLabel }}</span>
+  </app-button>
