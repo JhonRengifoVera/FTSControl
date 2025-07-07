@@ -1,0 +1,123 @@
+<div class="grid">
+    <!-- SALUDO -->
+    <div class="m-4 rounded-xl bg-background p-4 text-center shadow-lg flex items-center justify-center gap-2">
+        <i
+            [ngClass]="{ 'pi pi-sun text-yellow-500 text-xl': momento == 'Buenos dias' , 'pi pi-moon text-gray-500 text-xl': momento == 'Buenas noches'}"></i>
+        <h1 class="text-lg sm:text-xl md:text-2xl text-foreground font-medium">
+            {{ momento }}, <span class="font-bold text-primary">Recursos Humanos</span>
+        </h1>
+    </div>
+    <!-- FIN SALUDO -->
+    <!-- CONTADORES -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 px-4">
+        <app-stats-card title="Colaboradores Registrados" [value]="contadorColaboradores" icon="pi pi-users"
+            iconColor="text-blue-500" [series]="usuariosSeries" chartColor="#3B82F6" />
+
+        <app-stats-card title="Permisos este mes" [value]="contadorPermisosEntrantes" icon="pi pi-inbox"
+            iconColor="text-yellow-500" [series]="entrantesSeries" chartColor="#FACC15" />
+
+        <app-stats-card title="Permisos Pendientes" [value]="contadorPendientes" icon="pi pi-clock"
+            iconColor="text-orange-500" [series]="pendientesSeries" chartColor="#FB923C" />
+
+        <app-stats-card title="Permisos Rechazados" [value]="contadorUltimoAprobado" icon="pi pi-times"
+            iconColor="text-red-500" [series]="rechazadosSeries" chartColor="#EF4444" />
+    </div>
+    <div class="m-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div class="text-clamp(14px,2vw,28px) rounded-lg bg-background p-2 text-center shadow">
+            <apx-chart [series]="chartSeries" [chart]="chartDetails" [xaxis]="xAxis" [title]="chartTitle"
+                [legend]="chartLegend" [responsive]="chartResponsive">
+            </apx-chart>
+        </div>
+        <div class="text-clamp(14px,2vw,28px) rounded-lg bg-background p-2 text-center shadow">
+            <apx-chart [series]="chartSeriesEstado" [chart]="chartDetailsEstado" [labels]="xAxisEstadoPermisos.labels"
+                [title]="chartTitleEstado" [legend]="chartLegend" [responsive]="chartResponsive">
+            </apx-chart>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-2 gap-4 text-center">
+            <div
+                class="cursor-pointer flex flex-col items-center justify-center gap-2 rounded-lg bg-background p-4 shadow hover:bg-muted transition-colors">
+                <i class="pi pi-user-plus text-2xl text-foreground"></i>
+                <p class="text-sm font-medium text-foreground hidden sm:block">Registrar Colaborador</p>
+            </div>
+
+            <div
+                class="cursor-pointer flex flex-col items-center justify-center gap-2 rounded-lg bg-background p-4 shadow hover:bg-muted transition-colors">
+                <svg-icon [src]="'assets/icons/heroicons/outline/user-focus.svg'"
+                    [svgClass]="'h-6 w-6 text-foreground'"></svg-icon>
+                <p class="text-sm font-medium text-foreground hidden sm:block">Asginar Jefes</p>
+            </div>
+
+            <div
+                class="cursor-pointer flex flex-col items-center justify-center gap-2 rounded-lg bg-background p-4 shadow hover:bg-muted transition-colors">
+                <svg-icon [src]="'assets/icons/heroicons/outline/user-circle-gear.svg'"
+                    [svgClass]="'h-6 w-6 text-foreground'"></svg-icon>
+                <p class="text-sm font-medium text-foreground hidden sm:block">Actualizar Colaborador</p>
+            </div>
+
+            <div
+                class="cursor-pointer flex flex-col items-center justify-center gap-2 rounded-lg bg-background p-4 shadow hover:bg-muted transition-colors">
+                <svg-icon [src]="'assets/icons/heroicons/outline/reportes.svg'"
+                    [svgClass]="'h-6 w-6 text-foreground'"></svg-icon>
+                <p class="text-sm font-medium text-foreground hidden sm:block">Reportes</p>
+            </div>
+        </div>
+    </div>
+    <div class="m-4 bg-background overflow-x-auto rounded-lg shadow">
+        <p-table #dt2 [lazy]="true" [value]="data" [scrollable]="true" scrollDirection="horizontal"
+            [tableStyle]="{ 'min-width': '900px' }" styleClass="p-datatable-striped" class="text-xs">
+            <ng-template pTemplate="caption">
+                <div class="flex align-items-center justify-content-between font-montserrat">
+                    Permisos entrantes
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" class="bg-background">
+                <tr class="bg-background">
+                    <th class="text-center whitespace-nowrap">
+                        Colaborador
+                    </th>
+                    <th class="text-center whitespace-nowrap">
+                        Motivo permiso
+                    </th>
+                    <th class="text-center whitespace-nowrap">
+                       Cargo
+                    </th>
+                    <th pSortableColumn="data2" class="text-center whitespace-nowrap">
+                        Fecha inicio
+                        <p-sortIcon field="data2" style="position: absolute;" />
+                    </th>
+                    <th pSortableColumn="data3" class="text-center whitespace-nowrap">
+                        Fecha fin
+                        <p-sortIcon field="data3" style="position: absolute;" />
+                    </th>
+                    <th class="text-center whitespace-nowrap">
+                        Estado
+                    </th>
+                    <th class="text-center whitespace-nowrap">
+                        Acciones
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-data>
+                <tr>
+                    <td class="text-center">{{ data.data }}</td>
+                    <td class="text-center">{{ data.data1 }}</td>
+                    <td class="text-center">{{ data.data4 }}</td>
+                    <td class="text-center">{{ data.data2 }}</td>
+                    <td class="text-center">{{ data.data3 }}</td>
+                    <td class="text-center">
+                        <i class="pi"
+                            [ngClass]="{ 'text-green-500 pi-check-circle': data.data5 == 1 , 'text-blue-500 pi-info-circle': data.data5 == 2, 'text-red-500 pi-times-circle': data.data5 == 3  }"></i>
+                    </td>
+                    <td class="text-center">
+                        <app-button impact="bold" tone="primary" shape="rounded"
+                            class="text-center flex justify-center items-center" size="small">
+                            <i class="pi pi-search block md:hidden lg:hidden"></i>
+                            <span class="hidden lg:inline md:block">Ver detalle </span>
+                        </app-button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

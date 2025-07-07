@@ -6,17 +6,20 @@ import { ActualizarInformacionComponent } from './pages/colaboradores/actualizar
 import { AsignacionJefesRolesComponent } from './pages/colaboradores/asignacion-jefes-roles/asignacion-jefes-roles.component';
 import { ConsultarPermisosComponent } from './pages/permisos/consultar-permisos/consultar-permisos.component';
 import { ReportesComponent } from './pages/reportes/reportes.component';
+import { InicioComponent } from './pages/inicio-rrhh/inicio-rrhh.component';
 
 const routes: Routes = [
   {
     path: '',
     component: RrhhComponent,
     children: [
+      { path: 'inicio-rrhh', component: InicioComponent },
       { path: 'colaboradores/registro', component: RegistroColaboradorComponent },
       { path: 'colaboradores/actualizar', component: ActualizarInformacionComponent },
       { path: 'colaboradores/asignacion', component: AsignacionJefesRolesComponent },
       { path: 'permisos', component: ConsultarPermisosComponent },
       { path: 'reportes', component: ReportesComponent },
+      { path: '*', component: InicioComponent },
     ]
   }
 ];

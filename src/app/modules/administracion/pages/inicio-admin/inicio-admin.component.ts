@@ -78,7 +78,7 @@ export class InicioAdminComponent {
   data: any;
 
   ngOnInit() {
-    this.momento = this.getTimeOfDay();
+    this.momento = this.animacionService.getTimeOfDay();
     this.animacionService.animateCounter(this, 'contadorUsuarios', this.usuarioActivos, 2);
     this.animacionService.animateCounter(this, 'contadorPermisos', this.permisosEntrantes, 2);
     this.animacionService.animateCounter(this, 'contadorPendientes', this.pendientePorAprobacion, 2);
@@ -210,18 +210,6 @@ export class InicioAdminComponent {
       show: false
     }
   };
-
-
-  getTimeOfDay(date: Date = new Date()): 'Buenos dias' | 'Buenas tardes' | 'Buenas noches' {
-    const hour = date.getHours();
-    if (hour >= 5 && hour < 12) {
-      return 'Buenos dias';
-    } else if (hour >= 12 && hour < 18) {
-      return 'Buenas tardes';
-    } else {
-      return 'Buenas noches';
-    }
-  }
 
   estadoPermiso(respuesta: number) {
     if (respuesta == 1) {

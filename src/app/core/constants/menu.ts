@@ -37,6 +37,11 @@ export class Menu {
       items: [
         {
           icon: 'assets/icons/heroicons/outline/users.svg',
+          label: 'Inicio',
+          route: '/rrhh/inicio-rrhh'
+        },
+        {
+          icon: 'assets/icons/heroicons/outline/users.svg',
           label: 'Colaboradores',
           route: '/rrhh/colaboradores',
           children: [
