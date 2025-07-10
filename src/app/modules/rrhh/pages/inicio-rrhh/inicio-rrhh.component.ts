@@ -12,7 +12,7 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
   standalone: true,
   imports: [
     CommonModule, StatsCardComponent, NgApexchartsModule,
-    AngularSvgIconModule, TableModule, ButtonComponent 
+    AngularSvgIconModule, TableModule, ButtonComponent
   ],
   templateUrl: './inicio-rrhh.component.html',
   styleUrl: './inicio-rrhh.component.scss'
@@ -77,6 +77,7 @@ export class InicioComponent {
     this.momento = this.animacionService.getTimeOfDay();
     this.data = [
       {
+        id: 2,
         data: "Jhon Jairo Rengifo Vera",
         data1: "Licencia Paternidad",
         data2: "2025-03-12 12:00:00 pm",
@@ -85,6 +86,7 @@ export class InicioComponent {
         data5: 3
       },
       {
+        id: 2,
         data: "Marisol Davila",
         data1: "Cita medica",
         data2: "2025-03-10 12:00:00 pm",
@@ -93,6 +95,7 @@ export class InicioComponent {
         data5: 1
       },
       {
+        id: 3,
         data: "Jeison Diaz",
         data1: "Enfermedad",
         data2: "2025-03-11 12:00:00 pm",
@@ -101,6 +104,7 @@ export class InicioComponent {
         data5: 2
       },
       {
+        id: 4,
         data: "Juan Camilo Atoy",
         data1: "Licencia Paternidad",
         data2: "2025-03-12 12:00:00 pm",
@@ -109,6 +113,7 @@ export class InicioComponent {
         data5: 1
       },
       {
+        id: 5,
         data: "Nicolas Mesa",
         data1: "Licencia Paternidad",
         data2: "2025-03-13 12:00:00 pm",

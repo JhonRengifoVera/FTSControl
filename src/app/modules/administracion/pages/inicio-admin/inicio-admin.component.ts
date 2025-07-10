@@ -84,7 +84,8 @@ export class InicioAdminComponent {
     this.animacionService.animateCounter(this, 'contadorPendientes', this.pendientePorAprobacion, 2);
     this.animacionService.animateCounter(this, 'contadorRechazados', this.permisosRechazados, 2);
     this.data = [
-      {
+      { 
+        id:1,
         data: "Jhon Jairo Rengifo Vera",
         data1: "Licencia Paternidad",
         data2: "2025-03-12 12:00:00 pm",
@@ -92,6 +93,7 @@ export class InicioAdminComponent {
         data4: 2
       },
       {
+        id:2,
         data: "Marisol Davila",
         data1: "Cita medica",
         data2: "2025-03-10 12:00:00 pm",
@@ -99,6 +101,7 @@ export class InicioAdminComponent {
         data4: 1
       },
       {
+        id:3,
         data: "Jeison Diaz",
         data1: "Enfermedad",
         data2: "2025-03-11 12:00:00 pm",
@@ -106,6 +109,7 @@ export class InicioAdminComponent {
         data4: 3
       },
       {
+        id:4,
         data: "Juan Camilo Atoy",
         data1: "Licencia Paternidad",
         data2: "2025-03-12 12:00:00 pm",
@@ -113,6 +117,7 @@ export class InicioAdminComponent {
         data4: 1
       },
       {
+        id:5,
         data: "Nicolas Mesa",
         data1: "Licencia Paternidad",
         data2: "2025-03-13 12:00:00 pm",

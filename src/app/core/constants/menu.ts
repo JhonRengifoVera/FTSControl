@@ -37,28 +37,16 @@ export class Menu {
       items: [
         {
           icon: 'assets/icons/heroicons/outline/users.svg',
-          label: 'Inicio',
-          route: '/rrhh/inicio-rrhh'
-        },
-        {
-          icon: 'assets/icons/heroicons/outline/users.svg',
           label: 'Colaboradores',
           route: '/rrhh/colaboradores',
           children: [
-            { label: 'Registrar colaborador', route: '/rrhh/colaboradores/registro' },
-            { label: 'Actualizar información', route: '/rrhh/colaboradores/actualizar' },
+            { label: 'Inicio', route: '/rrhh/inicio-rrhh' },
+            { label: 'Gestion colaboradores', route: '/rrhh/colaboradores/registro' },
+            // { label: 'Actualizar información', route: '/rrhh/colaboradores/actualizar' },
             { label: 'Gestionar perfiles', route: '/rrhh/colaboradores/asignacion' },
+            { label: 'Consultar Permisos', route: '/rrhh/colaboradores/asignacion' },
+            { label: 'Reportes', route: '/rrhh/reportes' },
           ]
-        },
-        {
-          icon: 'assets/icons/heroicons/outline/users.svg',
-          label: 'Consultar Permisos',
-          route: '/rrhh/permisos'
-        },
-        {
-          icon: 'assets/icons/heroicons/outline/users.svg',
-          label: 'Reportes',
-          route: '/rrhh/reportes'
         }
       ]
     },

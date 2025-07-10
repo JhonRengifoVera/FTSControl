@@ -75,8 +75,9 @@
     </div>
   </div>
   <div class="m-4 bg-background overflow-x-auto rounded-lg shadow">
-    <p-table #dt2 [lazy]="true" [value]="data" [scrollable]="true" scrollDirection="horizontal"
-      [tableStyle]="{ 'min-width': '900px' }" styleClass="p-datatable-striped" class="text-xs">
+    <p-table #dt2 [lazy]="true" [value]="data" [scrollable]="true" scrollDirection="horizontal" [paginator]="true"
+      [rows]="10" [rowsPerPageOptions]="[5, 10, 20]" [tableStyle]="{ 'min-width': '900px' }"
+      styleClass="p-datatable-striped" class="text-xs">
       <ng-template pTemplate="caption">
         <div class="flex align-items-center justify-content-between font-montserrat">
           Permisos entrantes
@@ -84,12 +85,9 @@
       </ng-template>
       <ng-template pTemplate="header" class="bg-background">
         <tr class="bg-background">
-          <th class="text-center whitespace-nowrap">
-            Colaborador
-          </th>
-          <th class="text-center whitespace-nowrap">
-            Motivo permiso
-          </th>
+          <th class="text-center whitespace-nowrap">id</th>
+          <th class="text-center whitespace-nowrap">Colaborador</th>
+          <th class="text-center whitespace-nowrap">Motivo permiso</th>
           <th pSortableColumn="data2" class="text-center whitespace-nowrap">
             Fecha inicio
             <p-sortIcon field="data2" style="position: absolute;" />
@@ -98,17 +96,14 @@
             Fecha fin
             <p-sortIcon field="data3" style="position: absolute;" />
           </th>
-          <th class="text-center whitespace-nowrap">
-            Estado
-          </th>
-          <th class="text-center whitespace-nowrap">
-            Acciones
-          </th>
+          <th class="text-center whitespace-nowrap">Estado</th>
+          <th class="text-center whitespace-nowrap">Acciones</th>
         </tr>
       </ng-template>
 
       <ng-template pTemplate="body" let-data>
         <tr>
+          <td class="text-center">{{ data.id }}</td>
           <td class="text-center">{{ data.data }}</td>
           <td class="text-center">{{ data.data1 }}</td>
           <td class="text-center">{{ data.data2 }}</td>

@@ -1,1 +1,151 @@
-<p>actualizar-informacion works!</p>
+<div class="m-4 rounded-xl bg-background p-4 min-h-[70%] ">
+    <div class="grid gap-4">
+        <div class="relative">
+            <button
+                class="p-1 focus-visible:ring-ring cursor-pointer rounded-md border border-border bg-background text-xs font-medium text-muted-foreground shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 hover:bg-card hover:text-foreground">
+                <p class=" text-foreground text-sm">
+                    <span class="flex items-center gap-2"><i class="pi pi-pencil" style="font-size: 15px; color: #65758B;"></i> Editar datos</span>
+                </p>
+            </button>
+        </div>
+        <div class="text-center lg:flex lg:items-center justify-center lg:text-left lg:gap-4 mt-4">
+            <div>
+                <p-avatar size="large" shape="circle" [style]="{'background-color': '#007bff', 'color': '#ffffff'}"
+                    label="JR">
+                </p-avatar>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold text-foreground mt-2 lg:mt-0">{{empleado.nombre}}</h1>
+                <p class="text-sm text-muted-foreground my-2 lg:my-0">{{empleado.cargo}}</p>
+                <p-tag [severity]="empleado.estado == 'Activo' ? 'success' : 'danger'" [styleClass]="'font-montserrat'"
+                    value="{{empleado.estado}}" />
+            </div>
+        </div>
+        <section class="grid gap-4 grid-cols-2 text-foreground lg:grid-cols-4 md:grid-cols-4 mt-4 ">
+            <div class="flex items-center justify-center gap-2 text-xs lg:text-sm">
+                <div>
+                    <i class="pi pi-phone contact-icon"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold">Numero celular corporativo:</h1>
+                    <p>{{empleado.telefono}}</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs lg:text-sm">
+                <div>
+                    <i class="pi pi-envelope contact-icon"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-clamp(14px,2vw,28px)">Correo corporativo:</h1>
+                    <p class="text-clamp(14px,2vw,28px)">{{empleado.email}}</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs lg:text-sm">
+                <div>
+                    <i class="pi pi-building contact-icon"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold">Departamento:</h1>
+                    <span> {{empleado.departamento}}</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs lg:text-sm">
+                <div>
+                    <i class="pi pi-user contact-icon"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold">Jefe Directo:</h1>
+                    <p>{{empleado.jefeDirecto}}</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="overflow-x-auto w-full text-xs font-montserrat ">
+            <p-tabView [(activeIndex)]="activeTabIndex" [scrollable]="true" [styleClass]="'text-xs font-montserrat'">
+                <p-tabPanel *ngFor="let tab of tabs; let i = index" [header]="tab.header" [leftIcon]="tab.icon"
+                    [headerStyleClass]="getTabStyleClass(i)">
+
+                    <!-- Información Laboral -->
+                    <ng-container *ngIf="i === 0">
+                        <section class="p-4 rounded-xl border border-border bg-background shadow-sm w-full">
+                            <h1 class="text-lg font-bold text-foreground mb-4">Datos del puesto</h1>
+                            <div class="grid grid-cols-2 sm:grid-cols-2 gap-4 lg:grid-cols-4">
+                                <div class="rounded-lg border border-border border-l-4 border-l-blue-500 p-2 text-xs lg:text-sm">
+                                    <p><strong>Cargo:</strong> {{ datosLaborales.cargo }}</p>
+                                </div>
+                                <div class="rounded-lg border border-border border-l-4 border-l-blue-500 p-2 text-xs lg:text-sm">
+                                    <p><strong>Fecha de Ingreso:</strong> {{ datosLaborales.fechaIngreso }}</p>
+                                </div>
+                                <div class="rounded-lg border border-border border-l-4 border-l-blue-500 p-2 text-xs lg:text-sm">
+                                    <p><strong>Tipo de Contrato:</strong> {{ datosLaborales.tipoContrato }}</p>
+                                </div>
+                                <div class="rounded-lg border border-border border-l-4 border-l-blue-500 p-2 text-xs lg:text-sm">
+                                    <p><strong>Jornada:</strong> {{ datosLaborales.jornada }}</p>
+                                </div>
+
+                                <!-- Para que competencias no se desborde, usa col-span -->
+                            </div>
+                            <div class="sm:col-span-2 mt-4">
+                                <p class="font-semibold mb-2  text-xs lg:text-sm">Competencias:</p>
+                                <p-tag *ngFor="let comp of datosLaborales.competencias" [value]="comp"
+                                    [styleClass]="'m-2 font-montserrat  text-xs lg:text-sm'" severity="info"></p-tag>
+                            </div>
+                        </section>
+                    </ng-container>
+
+                    <!-- Información Personal -->
+                    <ng-container *ngIf="i === 1">
+                        <section class="p-4 rounded-xl border border-border bg-background shadow-sm w-full">
+                            <h1 class="text-lg font-bold text-foreground mb-4">Informacion colaborador</h1>
+                            <div class="grid grid-cols-2 sm:grid-cols-2 gap-4 lg:grid-cols-4">
+                                <div class="rounded-lg border border-border border-l-4 border-l-blue-500 p-2 text-xs lg:text-sm">
+                                    <p><strong>Cédula:</strong> {{ datosPersonales.cedula }}</p>
+                                </div>
+                                <div class="rounded-lg border border-border border-l-4 border-l-blue-500 p-2 text-xs lg:text-sm">
+                                    <p><strong>Fecha de Nacimiento:</strong> {{ datosPersonales.fechaNacimiento }}</p>
+                                </div>
+                                <div class="rounded-lg border border-border border-l-4 border-l-blue-500 p-2 text-xs lg:text-sm">
+                                    <p><strong>Contacto emergencia:</strong> {{ datosPersonales.numeroEmergencia }}</p>
+                                </div>
+                                <div class="rounded-lg border border-border border-l-4 border-l-blue-500 p-2 text-xs lg:text-sm">
+                                    <p><strong>Estado Civil:</strong> {{ datosPersonales.estadoCivil }}</p>
+                                </div>
+                                <div class="rounded-lg border border-border border-l-4 border-l-blue-500 p-2 text-xs lg:text-sm">
+                                    <p><strong>Dirección:</strong> {{ datosPersonales.direccion }}</p>
+                                </div>
+
+                                <!-- Para que competencias no se desborde, usa col-span -->
+                            </div>
+                        </section>
+                    </ng-container>
+
+                    <!-- Datos RRHH -->
+                    <ng-container *ngIf="i === 2">
+                        <section class="p-4 rounded-xl border border-border bg-background shadow-sm w-full">
+                            <h1 class="text-lg font-bold text-foreground mb-4">Informacion colaborador</h1>
+                            <div class="grid grid-cols-2 sm:grid-cols-2 gap-4 lg:grid-cols-4">
+                                <div class="rounded-lg border border-border border-l-4 border-l-blue-500 p-2 text-xs lg:text-sm">
+                                    <p><strong>ID Empleado:</strong> {{ datosRRHH.idEmpleado }}</p>
+                                </div>
+                                <div class="rounded-lg border border-border border-l-4 border-l-blue-500 p-2 text-xs lg:text-sm">
+                                    <p><strong>Centro de Costo:</strong> {{ datosRRHH.centroCosto }}</p>
+                                </div>
+                                <div class="rounded-lg border border-border border-l-4 border-l-blue-500 p-2 text-xs lg:text-sm">
+                                    <p><strong>Salario Base:</strong> {{ datosRRHH.salarioBase }}</p>
+                                </div>
+                                <div class="rounded-lg border border-border border-l-4 border-l-blue-500 p-2 text-xs lg:text-sm">
+                                    <p><strong>Días de Vacaciones:</strong> {{ datosRRHH.diasVacaciones }}</p>
+                                </div>
+
+                                <!-- Para que competencias no se desborde, usa col-span -->
+                            </div>
+                        </section>
+                    </ng-container>
+
+                </p-tabPanel>
+
+            </p-tabView>
+        </section>
+
+    </div>
+</div>
