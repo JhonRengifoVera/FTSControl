@@ -21,6 +21,7 @@
                     value="{{empleado.estado}}" />
             </div>
         </div>
+        <hr>
         <section class="grid gap-4 grid-cols-2 text-foreground lg:grid-cols-4 md:grid-cols-4 mt-4 ">
             <div class="flex items-center justify-center gap-2 text-xs lg:text-sm">
                 <div>
@@ -59,7 +60,7 @@
                 </div>
             </div>
         </section>
-
+        <hr>
         <section class="overflow-x-auto w-full text-xs font-montserrat ">
             <p-tabView [(activeIndex)]="activeTabIndex" [scrollable]="true" [styleClass]="'text-xs font-montserrat'">
                 <p-tabPanel *ngFor="let tab of tabs; let i = index" [header]="tab.header" [leftIcon]="tab.icon"

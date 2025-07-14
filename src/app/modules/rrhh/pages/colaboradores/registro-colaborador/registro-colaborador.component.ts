@@ -5,7 +5,7 @@ import { TableModule } from 'primeng/table';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { DialogModule } from 'primeng/dialog';
-import { CrearUsuarioComponent } from 'src/app/core/utils/crear-usuario/crear-usuario.component';
+import { CrearColaboradorComponent } from '../../../../../core/utils/crear-colaborador/crear-colaborador.component';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 
 @Component({
@@ -14,7 +14,7 @@ import { ButtonComponent } from 'src/app/shared/components/button/button.compone
   imports: [
     RouterOutlet, TableModule, CommonModule,
     ButtonComponent, IconFieldModule, InputIconModule,
-    DialogModule, CrearUsuarioComponent
+    DialogModule, CrearColaboradorComponent
   ],
   templateUrl: './registro-colaborador.component.html',
   styleUrl: './registro-colaborador.component.scss'

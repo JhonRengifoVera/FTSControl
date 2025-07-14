@@ -63,7 +63,7 @@
 
 <p-dialog [(visible)]="visibleCrearUsuario" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
   [draggable]="false" [resizable]="false" (onHide)="visibleCrearUsuario = false" [contentStyleClass]="'bg-background'"
-  [styleClass]="'font-montserrat text-xs w-[33%]'" [showHeader]="false"
-  [contentStyle]="{ overflow: 'auto', 'border-radius': '0.5rem' }" closable="true" closeOnEscape="true">
-  <app-crear-usuario [visible]="visibleCrearUsuario" (cerrar)="visibleCrearUsuario = false"> </app-crear-usuario>
+  [styleClass]="'font-montserrat text-xs w-auto h-auto'" [showHeader]="false"
+  [contentStyle]="{ overflow: 'h-auto', 'border-radius': '0.5rem' }" closable="true" closeOnEscape="true">
+  <app-crear-colaborador [visible]="visibleCrearUsuario" (cerrar)="visibleCrearUsuario = false"> </app-crear-colaborador>
 </p-dialog>

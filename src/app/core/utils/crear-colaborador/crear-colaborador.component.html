@@ -1,0 +1,190 @@
+<p class="rounded-lg py-[5px] text-center text-lg font-bold text-foreground">
+    Crear nuevo colaborador
+</p>
+<section class="overflow-x-auto w-full text-xs font-montserrat ">
+    <p-tabView [(activeIndex)]="activeTabIndex" [scrollable]="true" [styleClass]="'text-xs font-montserrat'">
+        <p-tabPanel *ngFor="let tab of tabs; let i = index" [header]="tab.header" [leftIcon]="tab.icon"
+            [headerStyleClass]="getTabStyleClass(i)">
+
+            <!-- Información Laboral -->
+            <ng-container *ngIf="i === 0">
+                <form [formGroup]="formUsuario" (ngSubmit)="guardarUsuario()">
+                    <div class="grid rounded-lg bg-background">
+
+                        <!-- Nombres -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="nombres" class="mb-2 text-sm font-bold text-foreground">Nombres:</h1>
+                            <input type="text" id="nombres" class="rounded-lg border border-gray-300"
+                                placeholder="Nombres" />
+                        </div>
+
+                        <!-- apellidos -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="apellidos" class="mb-2 text-sm font-bold text-foreground">Apellidos:</h1>
+                            <input type="text" id="apellidos" class="rounded-lg border border-gray-300"
+                                placeholder="Apellidos" />
+                        </div>
+
+                        <!-- cedula -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="cedula" class="mb-2 text-sm font-bold text-foreground">Cedula:</h1>
+                            <input type="text" id="cedula" class="rounded-lg border border-gray-300"
+                                placeholder="Cedula" />
+                        </div>
+
+                        <!-- Correo -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="correo" class="mb-2 text-sm font-bold text-foreground">Correo electrónico:</h1>
+                            <input type="email" id="correo" class="rounded-lg border border-gray-300"
+                                placeholder="ejemplo@fts.com" formControlName="correo" />
+                        </div>
+
+                        <!-- Rol -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="rol" class="mb-2 text-sm font-bold text-foreground">Perfil:</h1>
+                            <p-dropdown [options]="roles" optionLabel="nombre" formControlName="rol" appendTo="body"
+                                [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+                                [styleClass]="'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full'"
+                                placeholder="Seleccione un perfil"></p-dropdown>
+                        </div>
+
+                        <!-- Departamento -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="Departamento" class="mb-2 text-sm font-bold text-foreground">Departamento:</h1>
+                            <p-dropdown [options]="departamentos" optionLabel="nombre" formControlName="departamento"
+                                appendTo="body"
+                                [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+                                [styleClass]="'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full'"
+                                placeholder="Seleccione un departamento"></p-dropdown>
+                        </div>
+
+                        <!-- Cargo -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="cargo" class="mb-2 text-sm font-bold text-foreground">Cargo:</h1>
+                            <p-dropdown [options]="cargos" optionLabel="nombre" formControlName="cargo" appendTo="body"
+                                [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+                                [styleClass]="'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full'"
+                                placeholder="Seleccione un cargo"></p-dropdown>
+                        </div>
+
+                        <!-- Jefe directo -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="cargo" class="mb-2 text-sm font-bold text-foreground">Jefe directo:</h1>
+                            <p-dropdown [options]="jefes" optionLabel="nombre" formControlName="jefe" appendTo="body"
+                                [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+                                [styleClass]="'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full'"
+                                placeholder="Seleccione un jefe (opcional)"></p-dropdown>
+                        </div>
+                    </div>
+                </form>
+            </ng-container>
+            <ng-container *ngIf="i === 1">
+                <form [formGroup]="formUsuario" (ngSubmit)="guardarUsuario()">
+                    <div class="grid rounded-lg bg-background">
+
+                        <!-- Cedula -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="cedula" class="mb-2 text-sm font-bold text-foreground">Documento de identidad:</h1>
+                            <input type="text" id="cedula" class="rounded-lg border border-gray-300"
+                                placeholder="Ingrese numero de documento de identidad" />
+                        </div>
+
+                        <!-- contacto -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="contacto" class="mb-2 text-sm font-bold text-foreground">Contacto emergencia:</h1>
+                            <input type="text" id="contacto" class="rounded-lg border border-gray-300"
+                                placeholder="Contacto emergencia" />
+                        </div>
+
+                        <!-- direccion -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="direccion" class="mb-2 text-sm font-bold text-foreground">Direccion:</h1>
+                            <input type="text" id="direccion" class="rounded-lg border border-gray-300"
+                                placeholder="Ingrese direccion de residencia" />
+                        </div>
+
+                        <!-- fecha nacimiento -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="fechaNacimiento" class="mb-2 text-sm font-bold text-foreground">Fecha nacimiento:</h1>
+                            <input type="date" id="fechaNacimiento" class="rounded-lg border border-gray-300"
+                                placeholder="Ingrese fecha nacimiento" formControlName="fechaNacimiento" />
+                        </div>
+
+                        <!-- Rol -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="rol" class="mb-2 text-sm font-bold text-foreground">Estado civil:</h1>
+                            <p-dropdown [options]="roles" optionLabel="nombre" formControlName="rol" appendTo="body"
+                                [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+                                [styleClass]="'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full'"
+                                placeholder="Seleccione un estado civil"></p-dropdown>
+                        </div>
+                    </div>
+                </form>
+            </ng-container>
+            <ng-container *ngIf="i === 2">
+                <form [formGroup]="formUsuario" (ngSubmit)="guardarUsuario()">
+                    <div class="grid rounded-lg bg-background">
+                        <!-- fecha ingreso -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="fechaIngreso" class="mb-2 text-sm font-bold text-foreground">Fecha ingreso:</h1>
+                            <input type="date" id="fechaIngreso" class="rounded-lg border border-gray-300"
+                                placeholder="Ingrese fecha nacimiento" formControlName="fechaIngreso" />
+                        </div>
+
+                        <!-- tipo contrato -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="tipoContrato" class="mb-2 text-sm font-bold text-foreground">Tipo contrato:</h1>
+                            <input type="text" id="cedula" class="rounded-lg border border-gray-300"
+                                placeholder="Ingrese numero de documento de identidad" />
+                        </div>
+
+                        <!-- jornada -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="jornada" class="mb-2 text-sm font-bold text-foreground">Jornada:</h1>
+                            <input type="text" id="jornada" class="rounded-lg border border-gray-300"
+                                placeholder="Jornada" />
+                        </div>
+
+                        <!-- salario -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="salario" class="mb-2 text-sm font-bold text-foreground">Salario Base:</h1>
+                            <input type="text" id="direccion" class="rounded-lg border border-gray-300"
+                                placeholder="Salario base" />
+                        </div>
+
+                        <!-- competencias -->
+                        <div class="mt-2 h-1/2">
+                            <h1 for="rol" class="mb-2 text-sm font-bold text-foreground">Competencias:</h1>
+                            <p-dropdown [options]="roles" optionLabel="nombre" formControlName="rol" appendTo="body"
+                                [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+                                [styleClass]="'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full'"
+                                placeholder="Ingrese competencias del colaborador"></p-dropdown>
+                        </div>
+                    </div>
+                </form>
+            </ng-container>
+        </p-tabPanel>
+    </p-tabView>
+</section>
+
+<!-- Botones -->
+<div class="mt-4 flex items-center justify-center gap-2">
+  <app-button
+    impact="bold"
+    tone="primary"
+    shape="rounded"
+    class="p-2 text-center"
+    size="small"
+    (click)="cancelar()">
+    <div class="text-clamp(14px,2vw,28px) flex items-center py-1.5 gap-2 ">
+      <i class="pi pi-times"> </i>
+      <h1>Cancelar</h1>
+    </div>
+  </app-button>
+  <app-button impact="bold" tone="primary" shape="rounded" class="p-2 text-center" size="small">
+    <div class="text-clamp(14px,2vw,28px) flex items-center py-1.5 gap-2">
+      <i class="pi pi-check"> </i>
+      <h1>Guardar</h1>
+    </div> 
+  </app-button>
+</div>

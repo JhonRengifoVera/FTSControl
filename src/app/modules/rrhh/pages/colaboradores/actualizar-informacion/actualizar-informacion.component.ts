@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
-import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TabViewModule } from 'primeng/tabview';
 import { TagModule } from 'primeng/tag';
-import { DividerModule } from 'primeng/divider';
-import { TimelineModule } from 'primeng/timeline';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 
@@ -19,7 +16,10 @@ interface TimelineEvent {
 @Component({
   selector: 'app-actualizar-informacion',
   standalone: true,
-  imports: [ButtonComponent, CommonModule,TabViewModule, ButtonModule, AvatarModule, TagModule, CardModule, DividerModule, TimelineModule],
+  imports: [
+    ButtonComponent, CommonModule,TabViewModule,
+    AvatarModule, TagModule, CardModule, 
+  ],
   templateUrl: './actualizar-informacion.component.html',
   styleUrl: './actualizar-informacion.component.scss'
 })
