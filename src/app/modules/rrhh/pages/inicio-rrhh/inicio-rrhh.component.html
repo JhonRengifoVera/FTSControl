@@ -1,8 +1,7 @@
 <div class="grid">
     <!-- SALUDO -->
     <div class="m-4 rounded-xl bg-background p-4 text-center shadow-lg flex items-center justify-center gap-2">
-        <i
-            [ngClass]="{ 'pi pi-sun text-yellow-500 text-xl': momento == 'Buenos dias' , 'pi pi-moon text-gray-500 text-xl': momento == 'Buenas noches'}"></i>
+        <i [ngClass]="{ 'pi pi-sun text-yellow-500 text-xl': momento == 'Buenos dias' , 'pi pi-moon text-gray-500 text-xl': momento == 'Buenas noches'}"></i>
         <h1 class="text-lg sm:text-xl md:text-2xl text-foreground font-medium">
             {{ momento }}, <span class="font-bold text-primary">Recursos Humanos</span>
         </h1>

@@ -44,7 +44,7 @@ export class Menu {
             { label: 'Gestion colaboradores', route: '/rrhh/colaboradores/registro' },
             // { label: 'Actualizar información', route: '/rrhh/colaboradores/actualizar' },
             { label: 'Gestionar perfiles', route: '/rrhh/colaboradores/asignacion' },
-            { label: 'Consultar Permisos', route: '/rrhh/colaboradores/asignacion' },
+            { label: 'Consultar Permisos', route: '/rrhh/colaboradores/permisos' },
             { label: 'Reportes', route: '/rrhh/reportes' },
           ]
         }

@@ -1,1 +1,59 @@
-<p>consultar-permisos works!</p>
+<div class="bg-surface m-4 rounded-xl bg-background p-4 shadow-sm">
+  <h2 class="mb-4 text-xl font-semibold text-foreground">Consulta de permisos</h2>
+
+  <!-- Tabla de permisos -->
+  <p-table
+    [value]="permisosFiltrados"
+    [scrollable]="true"
+    scrollDirection="horizontal"
+    [paginator]="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [tableStyle]="{ 'min-width': '900px' }"
+    styleClass="p-datatable-striped"
+    class="text-xs">
+    <ng-template pTemplate="caption">
+      <div class="flex items-center">
+        <input
+          pInputText
+          type="text"
+          placeholder="Buscar permiso"
+          class="w-[10rem] border font-montserrat placeholder:text-xs placeholder:text-gray-400 lg:w-[24rem] lg:text-sm"
+          [style]="{ height: '40px', 'border-radius': '0.5rem' }" />
+        <app-button impact="bold" tone="primary" shape="rounded" class="m-4" size="small">
+          <div class="text-clamp(14px,2vw,28px) flex items-center gap-2 md:py-1.5 lg:py-1.5 font-montserrat">
+            <i class="pi pi-search"> </i>
+            <h1>Buscar permiso</h1>
+          </div>
+        </app-button>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="text-center">Colaborador</th>
+        <th class="text-center">Correo</th>
+        <th class="text-center">Rol</th>
+        <th class="text-center">Fecha</th>
+        <th class="text-center">Motivo</th>
+        <th class="text-center">Estado</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-permiso>
+      <tr>
+        <td class="text-center">{{ permiso.nombre }}</td>
+        <td class="text-center">{{ permiso.correo }}</td>
+        <td class="text-center">{{ permiso.rol }}</td>
+        <td class="text-center">{{ permiso.fecha }}</td>
+        <td class="text-center">{{ permiso.motivo }}</td>
+        <td class="text-center">
+          <p-tag
+            styleClass="text-center"
+            [value]="permiso.estadoTexto"
+            [severity]="getColorEstado(permiso.estado).severity"
+            [icon]="getColorEstado(permiso.estado).icon">
+          </p-tag>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

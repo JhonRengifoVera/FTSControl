@@ -17,7 +17,7 @@ const routes: Routes = [
       { path: 'colaboradores/registro', component: RegistroColaboradorComponent },
       { path: 'colaboradores/actualizar', component: ActualizarInformacionComponent },
       { path: 'colaboradores/asignacion', component: AsignacionJefesRolesComponent },
-      { path: 'permisos', component: ConsultarPermisosComponent },
+      { path: 'colaboradores/permisos', component: ConsultarPermisosComponent },
       { path: 'reportes', component: ReportesComponent },
       { path: '*', component: InicioComponent },
     ]
