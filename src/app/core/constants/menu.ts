@@ -2,17 +2,6 @@ import { MenuItem } from '../models/menu.model';
 
 export class Menu {
   public static pages: MenuItem[] = [
-    // {
-    //   group: '',
-    //   separator: false,
-    //   items: [
-    //     {
-    //       icon: 'assets/icons/heroicons/outline/home.svg',
-    //       label: 'Inicio',
-    //       route: '/paginas/inicio',
-    //     },
-    //   ]
-    // },
     {
       group: 'Administración del sistema',
       separator: true,

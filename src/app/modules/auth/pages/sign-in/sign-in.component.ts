@@ -10,6 +10,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { ToastService } from 'src/app/core/services/toast-service.service';
 import { MessageService } from 'primeng/api';
+import { AuthService } from '../../services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-sign-in',
@@ -28,6 +31,8 @@ import { MessageService } from 'primeng/api';
     CardModule,
     PasswordModule,
     InputTextModule,
+    HttpClientModule,
+    ProgressSpinnerModule
   ], providers: [ToastService, MessageService]
 })
 export class SignInComponent {
@@ -35,11 +40,16 @@ export class SignInComponent {
   submitted = false;
   passwordTextType!: boolean;
   loading: boolean = false;
+
   usuario: string = '';
   contrasena: string = '';
   router = inject(Router);
   toastService = inject(ToastService);
   messageService = inject(MessageService);
+  authService = inject(AuthService);
+
+  usuarioIncorrecto: boolean = false;
+
 
   constructor(
     private formBuilder: FormBuilder
@@ -67,10 +77,23 @@ export class SignInComponent {
   }
 
   iniciarSesion() {
-    this.loading = true;
     this.submitted = true;
+    if (this.form.invalid) return;
+    this.loading = true;
     const { usuario, contrasena } = this.form.value;
-    this.save(usuario + contrasena)
+
+    this.authService.login({ usuario, contrasena }).subscribe({
+      next: (res) => {
+        this.authService.redirectUserByRole(res.usuario.rol);
+      },
+      error: (err) => {
+        this.usuarioIncorrecto = true;
+        this.loading = false;
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    });
   }
 
   save(detail: string) {

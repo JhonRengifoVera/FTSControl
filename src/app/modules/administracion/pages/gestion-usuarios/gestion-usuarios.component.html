@@ -1,8 +1,8 @@
 <div class="m-4 rounded-xl bg-background p-4">
   <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
     <div>
-      <h1 class="text-2xl font-bold text-foreground">Gestión de Usuarios</h1>
-      <p class="text-sm text-muted-foreground">Administracion de todos los usuarios del sistema</p>
+      <h1 class="text-2xl font-bold text-foreground">Gestión de usuarios administrativos</h1>
+      <p class="text-sm text-muted-foreground">Administracion de usuarios del sistema</p>
     </div>
   </div>
   <div class="mt-3">
@@ -60,7 +60,7 @@
 
 <p-dialog [(visible)]="visibleCrearUsuario" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
   [draggable]="false" [resizable]="false" (onHide)="visibleCrearUsuario = false" [contentStyleClass]="'bg-background'"
-  [styleClass]="'font-montserrat text-xs w-[33%]'" [showHeader]="false"
+  [styleClass]="'font-montserrat text-xs w-[70%]'" [showHeader]="false"
   [contentStyle]="{ overflow: 'auto', 'border-radius': '0.5rem' }" closable="true" closeOnEscape="true">
   <app-crear-usuario [visible]="visibleCrearUsuario" (cerrar)="visibleCrearUsuario = false"> </app-crear-usuario>
 </p-dialog>

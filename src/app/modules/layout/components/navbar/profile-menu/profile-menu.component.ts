@@ -1,4 +1,4 @@
-import { Component, Inject, Injector, OnInit } from '@angular/core';
+import { Component, inject, Inject, Injector, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { ClickOutsideDirective } from '../../../../../shared/directives/click-outside.directive';
@@ -11,6 +11,7 @@ import { throwError } from 'rxjs';
 import { ToastModule } from 'primeng/toast';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule } from '@angular/common';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-profile-menu',
@@ -101,6 +102,7 @@ export class ProfileMenuComponent implements OnInit {
   public themeMode = ['Claro', 'Oscuro'];
   loading: boolean = false;
   nombreUsuario: string = '';
+  authService = inject(AuthService);
 
   constructor(
     public themeService: ThemeService,
@@ -124,5 +126,10 @@ export class ProfileMenuComponent implements OnInit {
     this.themeService.theme.update((theme) => {
       return { ...theme, color: color };
     });
+  }
+
+  logout() {
+    this.loading = true;
+    this.authService.logout();
   }
 }

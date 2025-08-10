@@ -15,7 +15,8 @@ export class MenuService implements OnDestroy {
 
   constructor(private router: Router) {
     /** Set dynamic menu */
-    this._pagesMenu.set(Menu.pages);
+    const rol = localStorage.getItem('rol');
+    this._pagesMenu.set(this.getMenuForRol(rol));
 
     let sub = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -86,5 +87,20 @@ export class MenuService implements OnDestroy {
 
   ngOnDestroy(): void {
     this._subscription.unsubscribe();
+  }
+
+  private getMenuForRol(rol: string | null): MenuItem[] {
+    switch (rol) {
+      case 'SUPER_ADMIN':
+        return Menu.pages.filter(p => p.group === 'Administración del sistema');
+      case 'RRHH':
+        return Menu.pages.filter(p => p.group === 'Recursos Humanos');
+      case 'JEFE':
+        return Menu.pages.filter(p => p.group === 'Jefe directo');
+      case 'COLABORADOR':
+        return Menu.pages.filter(p => p.group === 'Colaborador');
+      default:
+        return [];
+    }
   }
 }

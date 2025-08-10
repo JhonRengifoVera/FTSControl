@@ -6,18 +6,19 @@ import { AsignacionPermisosComponent } from './pages/asignacion-permisos/asignac
 import { AdministracionRolesComponent } from './pages/administracion-roles/administracion-roles.component';
 import { ReportesComponent } from './pages/reportes/reportes.component';
 import { InicioAdminComponent } from './pages/inicio-admin/inicio-admin.component';
+import { superAdminGuard } from '../../core/guards/super-admin.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
     children: [
-      { path: 'inicio-admin', component: InicioAdminComponent },
-      { path: 'gestion-usuarios', component: GestionUsuariosComponent },
-      { path: 'asignacion-permisos', component: AsignacionPermisosComponent },
-      { path: 'administracion-roles', component: AdministracionRolesComponent },
-      { path: 'reportes', component: ReportesComponent }
-    ],
+      { path: 'inicio-admin', component: InicioAdminComponent, canActivate: [superAdminGuard] },
+      { path: 'gestion-usuarios', component: GestionUsuariosComponent, canActivate: [superAdminGuard] },
+      { path: 'asignacion-permisos', component: AsignacionPermisosComponent, canActivate: [superAdminGuard] },
+      { path: 'administracion-roles', component: AdministracionRolesComponent, canActivate: [superAdminGuard] },
+      { path: 'reportes', component: ReportesComponent, canActivate: [superAdminGuard] }
+    ]
   },
 ];
 

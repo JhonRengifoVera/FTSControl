@@ -40,3 +40,38 @@ export interface ModalField {
   formControlName: string;
   enabled?: boolean;
 }
+export interface LoginResponse {
+  access_token: string;
+  usuario: {
+    id: number;
+    rol: string;
+    nombre: string;
+  };
+}
+export interface Rol {
+  id: number;
+  nombre: string;
+  codigo: string;
+  descripcion: string;
+}
+
+export interface tipoDocumento {
+  id: number;
+  nombre: string;
+  codigo: string;
+  descripcion: string;
+}
+
+export interface departamento {
+  id: number;
+  nombre: string;
+  codigo: string;
+  descripcion: string;
+}
+
+export interface cargo {
+  id: number;
+  nombre: string;
+  codigo: string;
+  descripcion: string;
+}
