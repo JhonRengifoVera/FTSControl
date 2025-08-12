@@ -1,0 +1,32 @@
+import { Translation } from 'primeng/api';
+
+export const primeNgTranslation: Translation = {
+  accept: 'Accept',
+  reject: 'Cancel',
+  monthNames: [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ],
+  dayNamesMin: ['Do','Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá' ],
+  monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+  emptyFilterMessage: 'No se encontraron resultados',
+  emptyMessage: 'No se encontraron resultados',
+  passwordPrompt: 'Ingrese la contraseña.',
+  weak: 'Débil',
+  strong: 'Fuerte',
+  medium: 'Media',
+  noFilter: 'No se encontraron resultados',
+  emptySearchMessage: 'No se encontraron resultados',
+  today: 'Hoy',
+  clear: 'Limpiar',
+};

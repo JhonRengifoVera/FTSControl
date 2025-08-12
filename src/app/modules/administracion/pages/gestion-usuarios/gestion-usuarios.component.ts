@@ -6,23 +6,29 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
+
 import { CrearUsuarioComponent } from 'src/app/core/utils/crear-usuario/crear-usuario.component';
+import { ToastService } from 'src/app/core/services/toast-service.service';
 @Component({
   selector: 'app-gestion-usuarios',
   standalone: true,
   imports: [
     RouterOutlet, TableModule, CommonModule,
     ButtonComponent, IconFieldModule, InputIconModule,
-    DialogModule, CrearUsuarioComponent
+    DialogModule, CrearUsuarioComponent, ToastModule
   ],
   templateUrl: './gestion-usuarios.component.html',
-  styleUrl: './gestion-usuarios.component.scss'
+  styleUrl: './gestion-usuarios.component.scss',
+  providers: [ToastService]
 })
 export class GestionUsuariosComponent {
   data: any;
   usuarios: any;
   searchValue: string = '';
   visibleCrearUsuario: boolean = false;
+
+  constructor(private toastService: ToastService) {}
 
   ngOnInit() {
     this.usuarios = [
@@ -49,5 +55,13 @@ export class GestionUsuariosComponent {
 
   abrirModalCrearUsuario() {
     this.visibleCrearUsuario = true;
+  }
+
+  prueba() {
+    this.toastService.showToast({
+      titulo: 'Prueba',
+      mensaje: 'El toast está funcionando 🎉',
+      tipo: 'success'
+    });
   }
 }

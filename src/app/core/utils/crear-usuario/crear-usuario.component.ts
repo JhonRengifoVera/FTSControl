@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 import { AdministracionService } from 'src/app/modules/administracion/services/administracion.service';
 import { cargo, departamento, Rol, tipoDocumento } from 'src/app/core/models/global.model';
-import { Observable } from 'rxjs';
+import { ToastService } from '../../services/toast-service.service';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -35,7 +35,7 @@ export class CrearUsuarioComponent {
   messageService = inject(MessageService);
   administracionService = inject(AdministracionService);
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private toastService: ToastService) {
     this.getRoles();
     this.getTipoDocumentos();
     this.getDepartamentos();
@@ -50,22 +50,60 @@ export class CrearUsuarioComponent {
   ngOnInit() {
     this.formValidations();
     this.estadosNotificaciones(this.formUsuario);
-    this.formUsuario.get('correo')?.valueChanges.subscribe(correo => {
-      this.formUsuario.patchValue({ nombreUsuario: correo }, { emitEvent: false });
+    this.formUsuario.get('email')?.valueChanges.subscribe(email => {
+      this.formUsuario.patchValue({ nombre_usuario: email }, { emitEvent: false });
     });
-
-    // Generar contraseña aleatoria al iniciar
     const randomPass = this.generarContrasena(10);
-    this.formUsuario.patchValue({ contrasena: randomPass });
+    this.formUsuario.patchValue({ password: randomPass });
   }
 
 
   guardarUsuario() {
     this.submitted = true;
-    if (this.formUsuario.invalid) return;
+
+    if (this.formUsuario.invalid) {
+      Object.keys(this.formUsuario.controls).forEach((campo) => {
+        const control = this.formUsuario.get(campo);
+        control?.markAsTouched();
+        if (control?.invalid) {
+          console.warn(`El campo "${campo}" es inválido`, control.errors);
+        }
+      });
+      this.toastService.showToast({
+        titulo: 'Formulario incompleto',
+        tipo: 'error',
+        mensaje: 'Por favor revisa los campos marcados en rojo.'
+      });
+      return;
+    }
+
     const datos = this.formUsuario.value;
-    console.log('Usuario a guardar:', datos);
+    this.administracionService.crearUsuariosAdmin(datos).subscribe({
+      next: (response) => {
+        if (response.status) {
+          this.toastService.showToast({
+            titulo: 'Exito',
+            tipo: 'success',
+            mensaje: response.message
+          });
+        } else {
+          this.toastService.showToast({
+            titulo: 'Información',
+            tipo: 'info',
+            mensaje: response.message
+          });
+        }
+      },
+      error: (err) => {
+        this.toastService.showToast({
+          titulo: 'Error',
+          tipo: 'error',
+          mensaje: err.error?.message || 'No se pudo crear el usuario.'
+        });
+      }
+    });
   }
+
 
   cancelar() {
     this.submitted = false;
@@ -84,15 +122,15 @@ export class CrearUsuarioComponent {
     this.formUsuario = this.formBuilder.group({
       nombres: ['', [Validators.required, Validators.minLength(2)]],
       apellidos: ['', [Validators.required, Validators.minLength(2)]],
-      tipoDocumento: [null, Validators.required],
+      tipo_documento: [null, Validators.required],
       numero_documento: ['', [Validators.required]],
-      correo: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required, Validators.pattern(/^[0-9+\-\s()]+$/)]],
-      nombreUsuario: ['', [Validators.required, Validators.minLength(4)]],
-      contrasena: ['', [Validators.required, Validators.minLength(6)]],
-      rol: [null, Validators.required],
-      departamento: [null, Validators.required],
-      cargo: [null, Validators.required],
+      nombre_usuario: ['', [Validators.required, Validators.minLength(4)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      rol_id: [null, Validators.required],
+      departamento_id: [null, Validators.required],
+      cargo_id: [null, Validators.required],
       notificacion_sistema: [false],
       notificacion_email: [true],
     });

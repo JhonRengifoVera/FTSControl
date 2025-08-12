@@ -75,3 +75,27 @@ export interface cargo {
   codigo: string;
   descripcion: string;
 }
+
+export interface usuarioAdministrativo {
+  nombres: string,
+  apellidos: string,
+  numero_documento: string,
+  tipo_documento: string,
+  email: string,
+  telefono: string,
+  nombre_usuario: string,
+  password: string,
+  estado_cuenta: string,
+  rol_id: string,
+  cargo_id: string,
+  departamento_id: string,
+  notificaciones_email: boolean,
+  notificaciones_sistema: boolean
+}
+
+
+export interface CrearUsuarioResponse {
+  statusCode: number;
+  status: boolean;
+  message: string;
+}
