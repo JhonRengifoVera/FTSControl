@@ -6,11 +6,23 @@
     </div>
   </div>
   <div class="mt-3">
-    <p-table #dt [value]="usuarios" [paginator]="true" [rows]="10" [tableStyle]="{ 'min-width': '50rem' }"
-      [rowsPerPageOptions]="[5, 10, 20]" styleClass="p-datatable-striped" class="text-xs">
+    <p-table
+      #dt
+      [value]="usuarios"
+      [paginator]="true"
+      [rows]="10"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      styleClass="p-datatable-striped"
+      class="text-xs">
       <ng-template pTemplate="caption">
         <div class="flex items-center justify-center font-montserrat">
-          <app-button impact="bold" tone="primary" shape="rounded" class="m-4" size="small"
+          <app-button
+            impact="bold"
+            tone="primary"
+            shape="rounded"
+            class="m-4"
+            size="small"
             (click)="abrirModalCrearUsuario()">
             <div class="text-clamp(14px,2vw,28px) flex items-center gap-2 md:py-1.5 lg:py-1.5">
               <i class="pi pi-user-plus"> </i>
@@ -18,7 +30,10 @@
             </div>
           </app-button>
           <p-iconField iconPosition="left" class="ml-auto">
-            <input pInputText type="text" (input)="dt.filterGlobal(searchValue.trim(), 'contains')"
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal(searchValue.trim(), 'contains')"
               placeholder="Buscar usuario"
               class="w-[10rem] border font-montserrat placeholder:text-xs placeholder:text-gray-400 lg:w-[24rem] lg:text-sm"
               [style]="{ height: '40px', 'border-radius': '0.5rem' }" />
@@ -28,11 +43,14 @@
       <ng-template pTemplate="header">
         <tr>
           <th class="text-center">Id</th>
-          <th class="text-center">Nombre</th>
+          <th class="text-center">Nombres</th>
+          <th class="text-center">Apellidos</th>
           <th class="text-center">Identificacion</th>
           <th class="text-center">Correo</th>
-          <th class="text-center">Perfil</th>
-          <th class="text-center">Area</th>
+          <th class="text-center">Rol</th>
+          <th class="text-center">Cargo</th>
+          <th class="text-center">Departamento</th>
+          <th class="text-center">Estado</th>
           <th class="text-center">Acciones</th>
         </tr>
       </ng-template>
@@ -40,15 +58,21 @@
         <tr class="text-center">
           <td class="text-center">{{ usuarios.id }}</td>
           <td class="text-center">{{ usuarios.nombre }}</td>
+          <td class="text-center">{{ usuarios.apellidos }}</td>
           <td class="text-center">{{ usuarios.identificacion }}</td>
-          <td class="text-center">{{ usuarios.correo }}</td>
+          <td class="text-center">{{ usuarios.email }}</td>
           <td class="text-center">{{ usuarios.rol }}</td>
-          <td class="text-center">{{ usuarios.area }}</td>
+          <td class="text-center">{{ usuarios.cargo }}</td>
+          <td class="text-center">{{ usuarios.departamento }}</td>
+          <td class="text-center">{{ usuarios.estado }}</td>
           <td class="flex justify-center gap-2 text-center">
-            <app-button impact="bold" tone="primary" shape="rounded" class="text-center" size="small" (click)="prueba()">
-              <span class="flex items-center"><i class="pi pi-eye mr-1 text-sm"> </i> Ver</span>
-            </app-button>
-            <app-button impact="bold" tone="primary" shape="rounded" class="text-center" size="small">
+            <app-button
+              impact="bold"
+              tone="primary"
+              shape="rounded"
+              class="text-center"
+              size="small"
+              (click)="editarUsuario(usuarios.id)">
               <span class="flex items-center"><i class="pi pi-pencil mr-1 text-sm"> </i> Editar</span>
             </app-button>
           </td>
@@ -58,9 +82,23 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="visibleCrearUsuario" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
-  [draggable]="false" [resizable]="false" (onHide)="visibleCrearUsuario = false" [contentStyleClass]="'bg-background'"
-  [styleClass]="'font-montserrat text-xs w-[70%]'" [showHeader]="false"
-  [contentStyle]="{ overflow: 'auto', 'border-radius': '0.5rem' }" closable="true" closeOnEscape="true">
-  <app-crear-usuario [visible]="visibleCrearUsuario" (cerrar)="visibleCrearUsuario = false"> </app-crear-usuario>
+<p-dialog
+  [(visible)]="visibleDialogUsuario"
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="visibleDialogUsuario = false"
+  [contentStyleClass]="'bg-background'"
+  [styleClass]="'font-montserrat text-xs w-[70%]'"
+  [showHeader]="false"
+  [contentStyle]="{ overflow: 'auto', 'border-radius': '0.5rem' }"
+  closable="true"
+  closeOnEscape="true">
+  <app-crear-usuario
+    [visible]="visibleDialogUsuario"
+    (cerrar)="cerrarDialog()"
+    [modo]="modoDialog"
+    [usuario]="usuarioSeleccionado">
+  </app-crear-usuario>
 </p-dialog>

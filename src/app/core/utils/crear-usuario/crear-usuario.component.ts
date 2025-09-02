@@ -1,4 +1,4 @@
-import { Component, inject, Input, EventEmitter, Output } from '@angular/core';
+import { Component, inject, Input, EventEmitter, Output, SimpleChanges } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
@@ -12,6 +12,8 @@ import { ButtonComponent } from 'src/app/shared/components/button/button.compone
 import { AdministracionService } from 'src/app/modules/administracion/services/administracion.service';
 import { cargo, departamento, Rol, tipoDocumento } from 'src/app/core/models/global.model';
 import { ToastService } from '../../services/toast-service.service';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { EMPTY, finalize, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -20,7 +22,7 @@ import { ToastService } from '../../services/toast-service.service';
     DialogModule, FileUploadModule, ToastModule,
     ReactiveFormsModule, FormsModule, DropdownModule,
     InputTextModule, InputSwitchModule, ButtonComponent,
-    CommonModule
+    CommonModule, ProgressSpinnerModule
   ],
   templateUrl: './crear-usuario.component.html',
   providers: [MessageService]
@@ -28,6 +30,8 @@ import { ToastService } from '../../services/toast-service.service';
 })
 export class CrearUsuarioComponent {
   @Input() visible: boolean = false;
+  @Input() usuario?: any;  // si llega, estamos editando
+  @Input() modo: 'crear' | 'editar' = 'crear';
   @Output() cerrar = new EventEmitter<void>();
 
   formUsuario!: FormGroup;
@@ -42,10 +46,15 @@ export class CrearUsuarioComponent {
     this.getCargoOptions();
   }
 
+  //Modelos
   roles: Rol[] = [];
   tipoDocumento: tipoDocumento[] = [];
   departamentos: departamento[] = [];
   cargos: cargo[] = [];
+
+  loading: boolean = false;
+
+  randomPass = '';
 
   ngOnInit() {
     this.formValidations();
@@ -53,66 +62,18 @@ export class CrearUsuarioComponent {
     this.formUsuario.get('email')?.valueChanges.subscribe(email => {
       this.formUsuario.patchValue({ nombre_usuario: email }, { emitEvent: false });
     });
-    const randomPass = this.generarContrasena(10);
-    this.formUsuario.patchValue({ password: randomPass });
-  }
-
-
-  guardarUsuario() {
-    this.submitted = true;
-
-    if (this.formUsuario.invalid) {
-      Object.keys(this.formUsuario.controls).forEach((campo) => {
-        const control = this.formUsuario.get(campo);
-        control?.markAsTouched();
-        if (control?.invalid) {
-          console.warn(`El campo "${campo}" es inválido`, control.errors);
-        }
-      });
-      this.toastService.showToast({
-        titulo: 'Formulario incompleto',
-        tipo: 'error',
-        mensaje: 'Por favor revisa los campos marcados en rojo.'
-      });
-      return;
+    this.randomPass = this.generarContrasena(10);
+    this.formUsuario.patchValue({ password: this.randomPass });
+    if (this.modo === 'editar' && this.usuario) {
+      this.formUsuario.patchValue(this.usuario); // rellenas el formulario con los datos
     }
-
-    const datos = this.formUsuario.value;
-    this.administracionService.crearUsuariosAdmin(datos).subscribe({
-      next: (response) => {
-        if (response.status) {
-          this.toastService.showToast({
-            titulo: 'Exito',
-            tipo: 'success',
-            mensaje: response.message
-          });
-        } else {
-          this.toastService.showToast({
-            titulo: 'Información',
-            tipo: 'info',
-            mensaje: response.message
-          });
-        }
-      },
-      error: (err) => {
-        this.toastService.showToast({
-          titulo: 'Error',
-          tipo: 'error',
-          mensaje: err.error?.message || 'No se pudo crear el usuario.'
-        });
-      }
-    });
   }
 
-
-  cancelar() {
-    this.submitted = false;
-    this.formUsuario.reset();
-    this.formUsuario.markAsPristine();
-    this.formUsuario.markAsUntouched();
-    this.cerrar.emit();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['usuario'] && this.usuario && this.modo === 'editar') {
+      this.formUsuario.patchValue(this.usuario);
+    }
   }
-
 
   get f() {
     return this.formUsuario.controls;
@@ -134,6 +95,113 @@ export class CrearUsuarioComponent {
       notificacion_sistema: [false],
       notificacion_email: [true],
     });
+  }
+
+  guardarUsuario() {
+    this.submitted = true;
+
+    // 🔹 Si es crear → validamos todo el form
+    if (this.modo === 'crear' && this.formUsuario.invalid) {
+      Object.keys(this.formUsuario.controls).forEach((campo) => {
+        const control = this.formUsuario.get(campo);
+        control?.markAsTouched();
+      });
+
+      this.toastService.showToast({
+        titulo: 'Formulario incompleto',
+        tipo: 'error',
+        mensaje: 'Por favor revisa los campos marcados en rojo.'
+      });
+      return;
+    }
+
+    this.loading = true;
+    let huboError = false;
+
+    if (this.modo === 'crear') {
+      // ---------------- CREAR ----------------
+      const datos = this.formUsuario.value;
+
+      this.administracionService.crearUsuariosAdmin(datos).pipe(
+        switchMap((response) => {
+          if (!response.status) {
+            this.toastService.showToast({ titulo: 'Info', tipo: 'info', mensaje: response.message });
+            return EMPTY;
+          }
+
+          const credenciales = {
+            nombre_completo: `${datos.nombres} ${datos.apellidos}`,
+            usuario: datos.email,
+            contrasena: datos.password,
+            rol: datos.rol_id
+          };
+
+          return this.administracionService.crearUsuario(credenciales).pipe(
+            tap(() => {
+              this.toastService.showToast({ titulo: 'Éxito', tipo: 'success', mensaje: response.message });
+            })
+          );
+        }),
+        finalize(() => {
+          this.loading = false;
+          if (!huboError) {
+            this.limpiarCampos();
+          }
+        })
+      ).subscribe({
+        error: (err) => {
+          huboError = true;
+          this.toastService.showToast({
+            titulo: 'Error',
+            tipo: 'error',
+            mensaje: err.error?.message || 'No se pudo crear el usuario.'
+          });
+        }
+      });
+
+    } else {
+      // ---------------- EDITAR ----------------
+      const cambios = Object.keys(this.formUsuario.controls).reduce((acc: any, key) => {
+        const nuevoValor = this.formUsuario.get(key)?.value;
+        const valorOriginal = this.usuario ? this.usuario[key] : null;
+        if (nuevoValor !== valorOriginal) {
+          acc[key] = nuevoValor;
+        }
+        return acc;
+      }, {});
+
+      if (Object.keys(cambios).length === 0) {
+        this.toastService.showToast({
+          titulo: 'Sin cambios',
+          tipo: 'info',
+          mensaje: 'No realizaste ninguna modificación.'
+        });
+        this.loading = false;
+        return;
+      }
+
+      this.administracionService.editarUsuario(this.usuario.id, cambios).pipe(
+        tap(() => {
+          this.toastService.showToast({
+            titulo: 'Éxito',
+            tipo: 'success',
+            mensaje: 'Usuario actualizado correctamente.'
+          });
+        }),
+        finalize(() => {
+          this.loading = false;
+        })
+      ).subscribe({
+        error: (err) => {
+          huboError = true;
+          this.toastService.showToast({
+            titulo: 'Error',
+            tipo: 'error',
+            mensaje: err.error?.message || 'No se pudo actualizar el usuario.'
+          });
+        }
+      });
+    }
   }
 
   getRoles() {
@@ -209,4 +277,17 @@ export class CrearUsuarioComponent {
     }
     return pass;
   }
+
+  cancelar() {
+    this.limpiarCampos();
+    this.cerrar.emit();
+  }
+
+  limpiarCampos() {
+    this.submitted = false;
+    const currentPass = this.formUsuario.get('password')?.value;
+    this.formUsuario.reset();
+    this.formUsuario.patchValue({ password: currentPass });
+  }
+
 }

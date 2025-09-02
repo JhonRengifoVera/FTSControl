@@ -1,246 +1,261 @@
 <form [formGroup]="formUsuario">
   <p class="rounded-lg py-4 text-center text-lg font-bold text-foreground">Crear nuevo usuario administrativo</p>
   <!-- 🧍 Datos personales -->
-  <div class="mb-4 rounded-lg border border-border p-4">
-    <h2 class="text-md mb-2 font-bold text-foreground">Datos personales</h2>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <!-- Nombres -->
-      <div>
-        <label for="nombres" class="text-xs font-bold text-foreground">Nombres:</label>
-        <input
-          type="text"
-          id="nombres"
-          placeholder="Nombres"
-          class="w-full rounded-lg border border-gray-300"
-          formControlName="nombres"
-          type="text"
-          id="nombres"
-          [ngClass]="{ 'border border-red-600': submitted && f['nombres'].errors }" />
-        <div *ngIf="submitted && f['nombres'].errors" class="text-red-600">
-          <div *ngIf="f['nombres'].errors['required']">Nombres requeridos</div>
+  <div *ngIf="!loading; else loadingTemplate">
+    <div class="mb-4 rounded-lg border border-border p-4">
+      <h2 class="text-md mb-2 font-bold text-foreground">Datos personales</h2>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <!-- Nombres -->
+        <div>
+          <label for="nombres" class="text-xs font-bold text-foreground">Nombres:</label>
+          <input
+            type="text"
+            id="nombres"
+            placeholder="Nombres"
+            class="w-full rounded-lg border border-gray-300"
+            formControlName="nombres"
+            type="text"
+            id="nombres"
+            [ngClass]="{ 'border border-red-600': submitted && f['nombres'].errors }" />
+          <div *ngIf="submitted && f['nombres'].errors" class="text-red-600">
+            <div *ngIf="f['nombres'].errors['required']">Nombres requeridos</div>
+          </div>
         </div>
-      </div>
 
-      <!-- Apellidos -->
-      <div>
-        <label for="apellidos" class="text-xs font-bold text-foreground">Apellidos:</label>
-        <input
-          type="text"
-          id="apellidos"
-          placeholder="Apellidos"
-          class="w-full rounded-lg border border-gray-300"
-          formControlName="apellidos"
-          [ngClass]="{ 'border border-red-600': submitted && f['apellidos'].errors }" />
-        <div *ngIf="submitted && f['apellidos'].errors" class="text-red-600">
-          <div *ngIf="f['apellidos'].errors['required']">Apellidos requeridos</div>
+        <!-- Apellidos -->
+        <div>
+          <label for="apellidos" class="text-xs font-bold text-foreground">Apellidos:</label>
+          <input
+            type="text"
+            id="apellidos"
+            placeholder="Apellidos"
+            class="w-full rounded-lg border border-gray-300"
+            formControlName="apellidos"
+            [ngClass]="{ 'border border-red-600': submitted && f['apellidos'].errors }" />
+          <div *ngIf="submitted && f['apellidos'].errors" class="text-red-600">
+            <div *ngIf="f['apellidos'].errors['required']">Apellidos requeridos</div>
+          </div>
         </div>
-      </div>
 
-      <!-- Tipo documento -->
-      <div>
-        <label for="tipo_documento" class="text-xs font-bold text-foreground">Tipo de documento:</label>
-        <p-dropdown
-          [options]="tipoDocumento"
-          optionLabel="nombre"
-          formControlName="tipo_documento"
-          optionValue="codigo"
-          appendTo="body"
-          [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
-          [styleClass]="
-            'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full ' +
-            (submitted && f['tipo_documento'].errors ? 'border-red-600' : '')
-          "
-          placeholder="Seleccione un tipo de documento">
-        </p-dropdown>
-        <div *ngIf="submitted && f['tipo_documento'].errors" class="text-red-600">
-          <div *ngIf="f['tipo_documento'].errors['required']">Tipo de documento requerido</div>
+        <!-- Tipo documento -->
+        <div>
+          <label for="tipo_documento" class="text-xs font-bold text-foreground">Tipo de documento:</label>
+          <p-dropdown
+            [options]="tipoDocumento"
+            optionLabel="nombre"
+            formControlName="tipo_documento"
+            optionValue="codigo"
+            appendTo="body"
+            [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+            [styleClass]="
+              'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full ' +
+              (submitted && f['tipo_documento'].errors ? 'border-red-600' : '')
+            "
+            placeholder="Seleccione un tipo de documento">
+          </p-dropdown>
+          <div *ngIf="submitted && f['tipo_documento'].errors" class="text-red-600">
+            <div *ngIf="f['tipo_documento'].errors['required']">Tipo de documento requerido</div>
+          </div>
         </div>
-      </div>
 
-      <!-- Número documento -->
-      <div>
-        <label for="cedula" class="text-xs font-bold text-foreground">Número de documento:</label>
-        <input
-          type="text"
-          id="numero_documento"
-          placeholder="Número documento"
-          class="w-full rounded-lg border border-gray-300"
-          formControlName="numero_documento"
-          [ngClass]="{ 'border border-red-600': submitted && f['numero_documento'].errors }" />
-        <div *ngIf="submitted && f['numero_documento'].errors" class="text-red-600">
-          <div *ngIf="f['numero_documento'].errors['required']">Número de documento requerido</div>
+        <!-- Número documento -->
+        <div>
+          <label for="cedula" class="text-xs font-bold text-foreground">Número de documento:</label>
+          <input
+            type="text"
+            id="numero_documento"
+            placeholder="Número documento"
+            class="w-full rounded-lg border border-gray-300"
+            formControlName="numero_documento"
+            [ngClass]="{ 'border border-red-600': submitted && f['numero_documento'].errors }" />
+          <div *ngIf="submitted && f['numero_documento'].errors" class="text-red-600">
+            <div *ngIf="f['numero_documento'].errors['required']">Número de documento requerido</div>
+          </div>
         </div>
-      </div>
 
-      <!-- Correo -->
-      <div>
-        <label for="email" class="text-xs font-bold text-foreground">Correo electrónico:</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="ejemplo@ftstecnologia.com.co"
-          class="w-full rounded-lg border"
-          [ngClass]="{
-            'border-red-600': submitted && f['email'],
-            'border-gray-300': !(f['email'].invalid && f['email'].touched)
-          }"
-          formControlName="email" />
-        <div *ngIf="f['email'].touched && f['email'].errors" class="mt-1 text-xs text-red-600">
-          <div *ngIf="f['email'].errors['email']">Formato de correo inválido</div>
+        <!-- Correo -->
+        <div>
+          <label for="email" class="text-xs font-bold text-foreground">Correo electrónico:</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="ejemplo@ftstecnologia.com.co"
+            class="w-full rounded-lg border"
+            [ngClass]="{
+              'border-red-600': submitted && f['email'],
+              'border-gray-300': !(f['email'].invalid && f['email'].touched)
+            }"
+            formControlName="email" />
+          <div *ngIf="f['email'].touched && f['email'].errors" class="mt-1 text-xs text-red-600">
+            <div *ngIf="f['email'].errors['email']">Formato de correo inválido</div>
+          </div>
+          <div *ngIf="submitted && f['email'].errors" class="mt-1 text-xs text-red-600">
+            <div *ngIf="f['email'].errors['required']">El correo es obligatorio</div>
+          </div>
         </div>
-        <div *ngIf="submitted && f['email'].errors" class="mt-1 text-xs text-red-600">
-          <div *ngIf="f['email'].errors['required']">El correo es obligatorio</div>
-        </div>
-      </div>
 
-      <!-- Teléfono -->
-      <div>
-        <label for="telefono" class="text-xs font-bold text-foreground">Teléfono:</label>
-        <input
-          type="tel"
-          id="telefono"
-          placeholder="Teléfono"
-          class="w-full rounded-lg border border-gray-300"
-          formControlName="telefono"
-          [ngClass]="{ 'border border-red-600': submitted && f['telefono'].errors }" />
-        <div *ngIf="submitted && f['telefono'].errors" class="text-red-600">
-          <div *ngIf="f['telefono'].errors['required']">Teléfono requerido</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 🔐 Credenciales de acceso -->
-  <div class="mb-4 rounded-lg border border-border p-4">
-    <h2 class="text-md mb-2 font-bold text-foreground">Credenciales de acceso</h2>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div>
-        <label for="nombre_usuario" class="text-xs font-bold text-foreground">Nombre de usuario:</label>
-        <input
-          readonly
-          type="text"
-          id="nombre_usuario"
-          placeholder="Nombre de usuario"
-          class="w-full rounded-lg border border-gray-300 bg-gray-100 text-gray-500"
-          formControlName="nombre_usuario" />
-      </div>
-
-      <div>
-        <label for="password" class="text-xs font-bold text-foreground">Contraseña:</label>
-        <input
-          readonly
-          type="password"
-          id="password"
-          placeholder="Contraseña"
-          class="w-full rounded-lg border border-gray-300 bg-gray-100 text-gray-500"
-          formControlName="password" />
-      </div>
-    </div>
-  </div>
-
-  <!-- 🏢 Información organizacional -->
-  <div class="mb-4 rounded-lg border border-border p-4">
-    <h2 class="text-md mb-2 font-bold text-foreground">Información organizacional</h2>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <!-- Rol -->
-      <div>
-        <label for="rol" class="text-xs font-bold text-foreground">Rol:</label>
-        <p-dropdown
-          [options]="roles"
-          optionLabel="nombre"
-          formControlName="rol_id"
-          appendTo="body"
-          optionValue="id"
-          [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
-          [styleClass]="
-            'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full ' +
-            (submitted && f['rol_id'].errors ? 'border-red-600' : '')
-          "
-          placeholder="Seleccione un perfil">
-        </p-dropdown>
-        <div *ngIf="submitted && f['rol_id'].errors" class="text-red-600">
-          <div *ngIf="f['rol_id'].errors['required']">Rol requerido</div>
-        </div>
-      </div>
-
-      <!-- Departamento -->
-      <div>
-        <label for="departamento" class="text-xs font-bold text-foreground">Departamento:</label>
-        <p-dropdown
-          [options]="departamentos"
-          optionLabel="nombre"
-          formControlName="departamento_id"
-          appendTo="body"
-          optionValue="id"
-          [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
-          [styleClass]="
-            'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full ' +
-            (submitted && f['departamento_id'].errors ? 'border-red-600' : '')
-          "
-          placeholder="Seleccione un departamento">
-        </p-dropdown>
-        <div *ngIf="submitted && f['departamento_id'].errors" class="text-red-600">
-          <div *ngIf="f['departamento_id'].errors['required']">Departamento requerido</div>
-        </div>
-      </div>
-
-      <!-- Cargo -->
-      <div>
-        <label for="cargo" class="text-xs font-bold text-foreground">Cargo:</label>
-        <p-dropdown
-          [options]="cargos"
-          optionLabel="nombre"
-          formControlName="cargo_id"
-          appendTo="body"
-          optionValue="id"
-          [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
-          [styleClass]="
-            'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full ' +
-            (submitted && f['cargo_id'].errors ? 'border-red-600' : '')
-          "
-          placeholder="Seleccione un cargo">
-        </p-dropdown>
-        <div *ngIf="submitted && f['cargo_id'].errors" class="text-red-600">
-          <div *ngIf="f['cargo_id'].errors['required']">Cargo requerido</div>
+        <!-- Teléfono -->
+        <div>
+          <label for="telefono" class="text-xs font-bold text-foreground">Teléfono:</label>
+          <input
+            type="tel"
+            id="telefono"
+            placeholder="Teléfono"
+            class="w-full rounded-lg border border-gray-300"
+            formControlName="telefono"
+            [ngClass]="{ 'border border-red-600': submitted && f['telefono'].errors }" />
+          <div *ngIf="submitted && f['telefono'].errors" class="text-red-600">
+            <div *ngIf="f['telefono'].errors['required']">Teléfono requerido</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- 🔔 Notificaciones -->
-  <div class="mb-4 rounded-lg border border-border p-4">
-    <h2 class="text-md mb-2 font-bold text-foreground">Notificaciones</h2>
-    <div class="mt-4 flex flex-wrap items-center gap-6">
-      <div class="flex items-center gap-2">
-        <label class="text-xs font-bold text-foreground">Sistema</label>
-        <p-inputSwitch formControlName="notificacion_sistema"></p-inputSwitch>
-      </div>
-      <div class="flex items-center gap-2">
-        <label class="text-xs font-bold text-foreground">Email</label>
-        <p-inputSwitch formControlName="notificacion_email"></p-inputSwitch>
+    <!-- 🔐 Credenciales de acceso -->
+    <div class="mb-4 rounded-lg border border-border p-4">
+      <h2 class="text-md mb-2 font-bold text-foreground">Credenciales de acceso</h2>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div>
+          <label for="nombre_usuario" class="text-xs font-bold text-foreground">Nombre de usuario:</label>
+          <input
+            readonly
+            type="text"
+            id="nombre_usuario"
+            placeholder="Nombre de usuario"
+            class="w-full rounded-lg border border-gray-300 bg-gray-100 text-gray-500"
+            formControlName="nombre_usuario" />
+        </div>
+
+        <div>
+          <label for="password" class="text-xs font-bold text-foreground">Contraseña:</label>
+          <input
+            readonly
+            type="password"
+            id="password"
+            placeholder="Contraseña"
+            class="w-full rounded-lg border border-gray-300 bg-gray-100 text-gray-500"
+            formControlName="password" />
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Botones -->
-  <div class="mt-4 flex items-center justify-center gap-2">
-    <app-button
-      impact="bold"
-      tone="primary"
-      shape="rounded"
-      class="p-2 text-center"
-      size="small"
-      (click)="guardarUsuario()">
-      <div class="text-clamp(14px,2vw,28px) flex items-center gap-2 py-1.5">
-        <i class="pi pi-check"></i>
-        <h1>Guardar</h1>
+    <!-- 🏢 Información organizacional -->
+    <div class="mb-4 rounded-lg border border-border p-4">
+      <h2 class="text-md mb-2 font-bold text-foreground">Información organizacional</h2>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <!-- Rol -->
+        <div>
+          <label for="rol" class="text-xs font-bold text-foreground">Rol:</label>
+          <p-dropdown
+            [options]="roles"
+            optionLabel="nombre"
+            formControlName="rol_id"
+            appendTo="body"
+            optionValue="id"
+            [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+            [styleClass]="
+              'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full ' +
+              (submitted && f['rol_id'].errors ? 'border-red-600' : '')
+            "
+            placeholder="Seleccione un perfil">
+          </p-dropdown>
+          <div *ngIf="submitted && f['rol_id'].errors" class="text-red-600">
+            <div *ngIf="f['rol_id'].errors['required']">Rol requerido</div>
+          </div>
+        </div>
+
+        <!-- Departamento -->
+        <div>
+          <label for="departamento" class="text-xs font-bold text-foreground">Departamento:</label>
+          <p-dropdown
+            [options]="departamentos"
+            optionLabel="nombre"
+            formControlName="departamento_id"
+            appendTo="body"
+            optionValue="id"
+            [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+            [styleClass]="
+              'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full ' +
+              (submitted && f['departamento_id'].errors ? 'border-red-600' : '')
+            "
+            placeholder="Seleccione un departamento">
+          </p-dropdown>
+          <div *ngIf="submitted && f['departamento_id'].errors" class="text-red-600">
+            <div *ngIf="f['departamento_id'].errors['required']">Departamento requerido</div>
+          </div>
+        </div>
+
+        <!-- Cargo -->
+        <div>
+          <label for="cargo" class="text-xs font-bold text-foreground">Cargo:</label>
+          <p-dropdown
+            [options]="cargos"
+            optionLabel="nombre"
+            formControlName="cargo_id"
+            appendTo="body"
+            optionValue="id"
+            [panelStyleClass]="'font-montserrat bg-background text-xs text-foreground'"
+            [styleClass]="
+              'bg-background rounded-lg border border-gray-300 text-xs font-montserrat w-full ' +
+              (submitted && f['cargo_id'].errors ? 'border-red-600' : '')
+            "
+            placeholder="Seleccione un cargo">
+          </p-dropdown>
+          <div *ngIf="submitted && f['cargo_id'].errors" class="text-red-600">
+            <div *ngIf="f['cargo_id'].errors['required']">Cargo requerido</div>
+          </div>
+        </div>
       </div>
-    </app-button>
-    <app-button impact="bold" tone="primary" shape="rounded" class="p-2 text-center" size="small" (click)="cancelar()">
-      <div class="text-clamp(14px,2vw,28px) flex items-center gap-2 py-1.5">
-        <i class="pi pi-times"></i>
-        <h1>Cancelar</h1>
+    </div>
+
+    <!-- 🔔 Notificaciones -->
+    <div class="mb-4 rounded-lg border border-border p-4">
+      <h2 class="text-md mb-2 font-bold text-foreground">Notificaciones</h2>
+      <div class="mt-4 flex flex-wrap items-center gap-6">
+        <div class="flex items-center gap-2">
+          <label class="text-xs font-bold text-foreground">Sistema</label>
+          <p-inputSwitch formControlName="notificacion_sistema"></p-inputSwitch>
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="text-xs font-bold text-foreground">Email</label>
+          <p-inputSwitch formControlName="notificacion_email"></p-inputSwitch>
+        </div>
       </div>
-    </app-button>
+    </div>
+
+    <!-- Botones -->
+    <div *ngIf="!loading" class="mt-4 flex items-center justify-center gap-2">
+      <app-button
+        impact="bold"
+        tone="primary"
+        shape="rounded"
+        class="p-2 text-center"
+        size="small"
+        (click)="guardarUsuario()">
+        <div class="text-clamp(14px,2vw,28px) flex items-center gap-2 py-1.5">
+          <i class="pi pi-check"></i>
+          <h1>{{modo == 'crear' ? 'Crear usuario' : 'Guardar cambios'}}</h1>
+        </div>
+      </app-button>
+      <app-button
+        impact="bold"
+        tone="primary"
+        shape="rounded"
+        class="p-2 text-center"
+        size="small"
+        (click)="cancelar()">
+        <div class="text-clamp(14px,2vw,28px) flex items-center gap-2 py-1.5">
+          <i class="pi pi-times"></i>
+          <h1>Cancelar</h1>
+        </div>
+      </app-button>
+    </div>
   </div>
 </form>
+
+<ng-template #loadingTemplate>
+  <div class="flex items-center justify-center" style="height: 200px">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="2" fill="var(--surface-ground)" animationDuration=".8s">
+    </p-progressSpinner>
+  </div>
+</ng-template>

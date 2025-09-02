@@ -10,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 
 import { CrearUsuarioComponent } from 'src/app/core/utils/crear-usuario/crear-usuario.component';
 import { ToastService } from 'src/app/core/services/toast-service.service';
+import { AdministracionService } from '../../services/administracion.service';
 @Component({
   selector: 'app-gestion-usuarios',
   standalone: true,
@@ -26,25 +27,86 @@ export class GestionUsuariosComponent {
   data: any;
   usuarios: any;
   searchValue: string = '';
-  visibleCrearUsuario: boolean = false;
+  visibleDialogUsuario = false;
+  modoDialog: 'crear' | 'editar' = 'crear';
+  usuarioSeleccionado: any = null;
 
-  constructor(private toastService: ToastService) {}
+  verUsuario: any
+  constructor(private toastService: ToastService, private administracionService: AdministracionService) { }
 
   ngOnInit() {
-    this.usuarios = [
-        { id: 1, nombre: 'Jhon Rengifo', identificacion: 1023456789, correo: 'jhon.rengifo@fts.com', rol: 'Administrador', area: 'Software' },
-        { id: 2, nombre: 'Ana López', identificacion: 987654321, correo: 'ana.lopez@fts.com', rol: 'Usuario', area: 'Ventas' },
-        { id: 3, nombre: 'Carlos Ruiz', identificacion: 123789456, correo: 'carlos.ruiz@fts.com', rol: 'Supervisor', area: 'SST' },
-        { id: 4, nombre: 'Marta Fernández', identificacion: 456123789, correo: 'marta.fernandez@fts.com', rol: 'Usuario', area: 'Finanzas' },
-        { id: 5, nombre: 'Luis Gómez', identificacion: 321654987, correo: 'luis.gomez@fts.com', rol: 'Administrador', area: 'Logística' },
-        { id: 6, nombre: 'Patricia Ríos', identificacion: 789456123, correo: 'patricia.rios@fts.com', rol: 'Supervisor', area: 'Calidad' },
-        { id: 7, nombre: 'David Morales', identificacion: 654987321, correo: 'david.morales@fts.com', rol: 'Usuario', area: 'Producción' },
-        { id: 8, nombre: 'Laura Herrera', identificacion: 852963741, correo: 'laura.herrera@fts.com', rol: 'Administrador', area: 'Marketing' },
-        { id: 9, nombre: 'Santiago Torres', identificacion: 147258369, correo: 'santiago.torres@fts.com', rol: 'Usuario', area: 'Compras' },
-        { id: 10, nombre: 'Valentina Castro', identificacion: 963852741, correo: 'valentina.castro@fts.com', rol: 'Supervisor', area: 'Recursos Humanos' },
-        { id: 11, nombre: 'Ricardo Méndez', identificacion: 159753486, correo: 'ricardo.mendez@fts.com', rol: 'Usuario', area: 'Legal' },
-        { id: 12, nombre: 'Natalia Vargas', identificacion: 357951468, correo: 'natalia.vargas@fts.com', rol: 'Administrador', area: 'Innovación' }
-    ]
+    this.obtenerUsuariosAdministrativos();
+  }
+
+  obtenerUsuariosAdministrativos() {
+    this.administracionService.obtenerUsuariosAdministrativos().subscribe({
+      next: (data) => {
+        this.usuarios = data.map((usuario: any) => ({
+          id: usuario.id,
+          nombre: usuario.nombres,
+          apellidos: usuario.apellidos,
+          identificacion: usuario.numero_documento,
+          email: usuario.email,
+          rol: usuario.rol_id,
+          cargo: usuario.cargo_id,
+          departamento: usuario.departamento_id,
+          estado: this.getEstadosUsuario(usuario.estado_cuenta)
+        }));
+      },
+      error: (error) => {
+        console.error('Error al obtener usuarios administrativos', error);
+      }
+    });
+  }
+
+  getUsuarioById(id: number) {
+    this.administracionService.obtenerUsuarioById(id).subscribe({
+      next: (data) => {
+        this.verUsuario = data;
+      },
+      error: (error) => {
+        console.error('Error al obtener usuario por ID', error);
+      }
+    });
+  }
+
+  editarUsuario(id: number) {
+    this.administracionService.editarUsuario(id, this.verUsuario).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.modoDialog = 'editar';
+        this.usuarioSeleccionado = data;
+        this.visibleDialogUsuario = true;
+        this.obtenerUsuariosAdministrativos();
+      },
+      error: (error) => {
+        console.error('Error al editar usuario', error);
+      }
+    });
+  }
+
+  getEstadosUsuario(estado: any) {
+    switch (estado) {
+      case 1:
+        return 'Activo';
+      case 2:
+        return 'Inactivo';
+      case 3:
+        return 'Retirado';
+      default:
+        return 'Desconocido';
+    }
+  }
+
+  getUtilsById(id: number, utilName: string) {
+    this.administracionService.getUtilsById(id, utilName).subscribe({
+      next: (data) => {
+        return data.nombre;
+      },
+      error: (error) => {
+        console.error('Error al obtener datos de utilidad', error);
+      }
+    });
   }
 
   filtrarGlobal(event: Event) {
@@ -54,14 +116,15 @@ export class GestionUsuariosComponent {
   }
 
   abrirModalCrearUsuario() {
-    this.visibleCrearUsuario = true;
+    this.modoDialog = 'crear';
+    this.usuarioSeleccionado = null;
+    this.visibleDialogUsuario = true;
   }
 
-  prueba() {
-    this.toastService.showToast({
-      titulo: 'Prueba',
-      mensaje: 'El toast está funcionando 🎉',
-      tipo: 'success'
-    });
+  cerrarDialog() {
+    this.visibleDialogUsuario = false;
+    this.obtenerUsuariosAdministrativos(); // refrescar la lista
   }
+
+
 }

@@ -94,6 +94,13 @@ export interface usuarioAdministrativo {
 }
 
 
+export interface usuario {
+  usuario: string,
+  nombre_completo: string,
+  contrasena: string,
+  rol: string,
+}
+
 export interface CrearUsuarioResponse {
   statusCode: number;
   status: boolean;
